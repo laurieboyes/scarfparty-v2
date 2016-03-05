@@ -1,0 +1,10 @@
+{
+  "name": "scarfparty-v2",
+  "description": "two-colour double-sided pixel-pattern scarf knitting tracker tool",
+  "main": [
+    "main.js",
+    "main.scss"
+  ],
+  "author": "Laurie Boyes",
+  "license": "MIT"
+}

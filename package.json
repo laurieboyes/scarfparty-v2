@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "devDependencies": {
+    "origami-build-tools": "^5.0.0"
+  }
+}
