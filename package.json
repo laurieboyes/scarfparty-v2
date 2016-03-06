@@ -1,7 +1,7 @@
 {
   "private": true,
   "devDependencies": {
-    "babel-register": "^6.6.5",
+    "chai": "^3.5.0",
     "mocha": "^2.4.5",
     "origami-build-tools": "^5.0.0"
   },
