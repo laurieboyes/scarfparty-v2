@@ -1,10 +1,11 @@
 {
   "private": true,
   "devDependencies": {
+    "babel-register": "^6.6.5",
     "mocha": "^2.4.5",
     "origami-build-tools": "^5.0.0"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha"
+    "test": "./node_modules/.bin/mocha --compilers js:babel-register"
   }
 }
