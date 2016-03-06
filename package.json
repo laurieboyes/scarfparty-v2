@@ -1,6 +1,10 @@
 {
   "private": true,
   "devDependencies": {
+    "mocha": "^2.4.5",
     "origami-build-tools": "^5.0.0"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha"
   }
 }
