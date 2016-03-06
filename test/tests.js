@@ -11,7 +11,25 @@ describe('Extracting the pattern from an image', function() {
         img.src = 'pattern-image.png';
         img.onload = function () {
             const pattern = new Pattern(img);
-            console.log('pattern', pattern);
+
+            expect(pattern.height).to.equal(11);
+            expect(pattern.width).to.equal(9);
+
+            // if you squint you can almost see the heart
+            expect(pattern.rows).to.deep.equal([
+                [0,1,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0],
+                [0,0,1,0,0,0,1,0,0],
+                [0,1,1,1,0,1,1,1,0],
+                [0,1,1,1,1,1,1,1,0],
+                [0,1,1,1,1,1,1,1,0],
+                [0,0,1,1,1,1,1,0,0],
+                [0,0,0,1,1,1,0,0,0],
+                [0,0,0,0,1,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0]
+            ]);
+
             done();
         };
 

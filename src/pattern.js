@@ -26,8 +26,9 @@ function getPixelsOnOff(imageData) {
 
         // only have to look at one colour channel to know if it's black or white, so just look at the red of each
         // pixel, filtering the rest out
-        .filter((_, i) => (i + 1) % 4 === 0)
+        .filter((_, i) => i % 4 === 0)
 
+        // if the value is greater than 127 it's light, else it's dark
         .map(pixel => pixel > 127 ? 0 : 1);
 }
 
@@ -43,12 +44,14 @@ export default class Pattern {
         // populate rows and rowsRevered arrays
         let currentRow = [];
         getPixelsOnOff(getImageData(img)).forEach(pixel => {
+
+            currentRow.push(pixel);
+
             if (currentRow.length >= img.width) {
                 this.rows.push(currentRow);
                 this.rowsReversed.push(currentRow.slice().reverse());
                 currentRow = [];
             }
-            currentRow.push(pixel);
         });
     }
 }
