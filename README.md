@@ -1,8 +1,8 @@
 # ScarfParty v2
 
-ScarfParty is a web-based companion to aid those engaged in knitting [two-colour, double-sided, pixel-pattern-based scarf](http://blog.lrnk.co.uk/tag/the-christmas-fam-scarf/).
+ScarfParty is a web-based companion for knitting a [two-colour, double-sided, pixel-pattern-based scarf](http://blog.lrnk.co.uk/tag/the-christmas-fam-scarf/).
 
-V2 of ScarfParty is a nice, clean, ES6 rewrite of the original AngularJS app, using absolutely no big JavaScript megaframeworks, and making use of [Origami Build Tools](https://github.com/Financial-Times/origami-build-tools) and the [polyfill service](https://cdn.polyfill.io/), which are both developed and maintained by the good people at the Financial Times.
+V2 of ScarfParty is a nice, clean, ES6 rewrite of the original AngularJS app, using absolutely no big JavaScript megaframeworks, and making use of [Origami Build Tools](https://github.com/Financial-Times/origami-build-tools) and the [polyfill service](https://cdn.polyfill.io/), both of which are developed and maintained by the good people at the Financial Times.
 
 ##Developing
 
