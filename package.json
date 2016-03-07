@@ -3,9 +3,10 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "mocha": "^2.4.5",
+    "mocha-phantomjs": "^4.0.2",
     "origami-build-tools": "^5.0.0"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha --compilers js:babel-register"
+    "test": "obt build --js=test/tests.js --buildJs=tests-compiled.js; ./node_modules/.bin/mocha-phantomjs test/index.html"
   }
 }
