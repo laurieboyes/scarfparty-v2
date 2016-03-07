@@ -1,21 +1,19 @@
 # ScarfParty v2
 
-A nice small, clean, non-angular, es6 rewrite of ScarfParty, the two-colour double-sided pixel-pattern scarf knitting 
-tracker tool.
+ScarfParty is a web-based companion to aid those engaged in knitting [two-colour, double-sided, pixel-pattern-based scarf](http://blog.lrnk.co.uk/tag/the-christmas-fam-scarf/).
 
-This app is build with the FT's [Origami Build Tools](https://github.com/Financial-Times/origami-build-tools), and makes use of the
-FT's [polyfill service](https://cdn.polyfill.io/).
+V2 of ScarfParty is a nice, clean, ES6 rewrite of the original AngularJS app, using absolutely no big JavaScript megaframeworks, and making use of [Origami Build Tools](https://github.com/Financial-Times/origami-build-tools) and the [polyfill service](https://cdn.polyfill.io/), which are both developed and maintained by the good people at the Financial Times.
 
 ##Developing
 
 ###Install
-npm install
+`npm install`
 
 ###Build
-obt build
+`obt build`
 
 ###Test
-npm test
+`npm test`
 
 ###Run
 Run an HTTP server in the project root directory e.g. with `python -m SimpleHTTPServer`
