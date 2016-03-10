@@ -1,8 +1,23 @@
-<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
-<script defer async src="build/main.js"></script>
-<link rel="stylesheet" href="build/main.css" />
-<p><b>ScarfParty v2</b> by Laurie Boyes</p>
+<head>
+	<meta name="viewport" content="width=device-width, height=device-height,  initial-scale=1.0, user-scalable=no;user-scalable=0;"/>
+	<title>ScarfParty v2 by Laurie Boyes</title>
+	<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+	<script defer async src="build/main.js"></script>
+	<link rel="stylesheet" href="build/main.css" />
+</head>
 
 <div class="pattern-container js-pattern-container">
     <canvas class="pattern"></canvas>
+</div>
+
+<div class="controls">
+	<div class="control stitch">
+		<label>Stitch</label><span class="which-side">RS???</span>
+		<input class="stitch-count js-stitch-count-input" type="number"/>
+	</div>
+	<p>Row: <b>3???</b> Row-stitch: <b>4???</b></p>
+	<div class="control do-stitch">
+		<input class="stitch-button js-do-stitch" type="button" value="Unpick 6"/>
+		<input class="stitch-button js-do-unpick" type="button" value="Stitch 6"/>
+	</div>
 </div>

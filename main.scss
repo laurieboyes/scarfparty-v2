@@ -1,1 +1,11 @@
 @import "src/pattern-display";
+@import "src/controls";
+
+body {
+	font-size: 25px;
+	font-family: sans-serif;
+}
+
+input {
+	font-size: 25px;
+}

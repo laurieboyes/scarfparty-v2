@@ -1,0 +1,25 @@
+.controls {
+	clear: both;
+}
+
+.stitch-count {
+	width: 100%;
+}
+
+.which-side {
+	float: right;
+}
+
+.stitch-button {
+	float: left;
+	width: 49%;
+	font-weight: bold;
+
+	// webkit-appearance button doesn't allow custom height
+	-webkit-appearance: none;
+	height: 60px;
+
+	&:first-child {
+		margin-right: 2%;
+	}
+}
