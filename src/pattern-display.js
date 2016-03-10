@@ -17,8 +17,8 @@ export default class PatternDisplay {
         this.stitchHeight = this.canvasHeight / pattern.height;
 
         const canvasEl = this.containerEl.querySelector('canvas');
-        canvasEl.style.width = this.canvasWidth;
-        canvasEl.style.height = this.canvasHeight;
+        canvasEl.width = this.canvasWidth;
+        canvasEl.height = this.canvasHeight;
 
         this.ctx = canvasEl.getContext("2d");
     }

@@ -1,7 +1,8 @@
 /**
  *
  * @param img
- * @returns {Array} array of integers representing the image, wherein each pixel is represented by 4 elements (rgba)
+ * @returns {Array} array of integers representing the image, wherein each pixel is represented by a group of 4 numbers
+ * between 0 and 255 corresponding to its rgba values
  */
 function getImageData(img) {
     //Create a canvas in memory that we can use to get the pattern image data
@@ -28,7 +29,7 @@ function getPixelsOnOff(imageData) {
         // pixel, filtering the rest out
         .filter((_, i) => i % 4 === 0)
 
-        // if the value is greater than 127 it's light, else it's dark
+        // if the value is greater than 127 (~half of the maximum of 255) it's light, else it's dark
         .map(pixel => pixel > 127 ? 0 : 1);
 }
 
