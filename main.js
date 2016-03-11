@@ -1,8 +1,12 @@
 import Pattern from './src/pattern'
 import PatternDisplay from './src/pattern-display'
+import initControls from './src/controls'
 import {ready} from './src/util'
 
 ready(() =>{
+
+	initControls();
+
     const img = new Image();
 
     // if image isn't on static.lrnk.co.uk (e.g. if I'm running it locally), we need an Access-Control-Allow-Origin: *

@@ -6,5 +6,8 @@
     "main.scss"
   ],
   "author": "Laurie Boyes",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "PubSub": "pubsub#^1.0.0"
+  }
 }
