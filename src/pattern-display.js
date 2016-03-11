@@ -1,3 +1,6 @@
+import p from 'pubsub'
+import model from './model.js'
+
 export default class PatternDisplay {
     constructor(pattern) {
 
@@ -21,13 +24,20 @@ export default class PatternDisplay {
         canvasEl.height = this.canvasHeight;
 
         this.ctx = canvasEl.getContext("2d");
+
+	    // event handling
+
+	    p.subscribe('/stitch', stitch => {
+		    this.draw(stitch);
+		    this.scrollToRow(model.getRowsDone())
+	    })
     }
 
     scrollToRow(row) {
         this.containerEl.scrollTop = (this.canvasHeight - (this.stitchHeight * row)) - (this.stitchHeight * 6);
     }
 
-    draw() {
+    draw(stitch) {
 
         this.ctx.fillStyle = "white";
         this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);

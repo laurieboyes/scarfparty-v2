@@ -2,6 +2,7 @@ import Pattern from './src/pattern'
 import PatternDisplay from './src/pattern-display'
 import initControls from './src/controls'
 import model from './src/model'
+import p from 'pubsub'
 import {ready} from './src/util'
 
 ready(() =>{
@@ -24,6 +25,8 @@ ready(() =>{
 
         patternDisplay.draw();
 
+	    //temp
+	    p.publish('/stitch', 0);
     };
 });
 
