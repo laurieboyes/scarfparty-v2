@@ -5,6 +5,8 @@ export default class PatternDisplay {
     constructor(pattern) {
 
         this.pattern = pattern;
+	    this.patternRows = pattern.rows;
+	    this.patternRowsReversed = pattern.rows.map(row => row.slice().reverse());
 
         this.containerEl = document.querySelector('.js-pattern-container');
 
@@ -27,8 +29,8 @@ export default class PatternDisplay {
 
 	    // event handling
 
-	    p.subscribe('/stitch', stitch => {
-		    this.draw(stitch);
+	    p.subscribe('/stitch', () => {
+		    this.draw();
 		    this.scrollToRow(model.getRowsDone())
 	    })
     }
@@ -37,23 +39,22 @@ export default class PatternDisplay {
         this.containerEl.scrollTop = (this.canvasHeight - (this.stitchHeight * row)) - (this.stitchHeight * 6);
     }
 
-    draw(stitch) {
+    draw() {
 
         this.ctx.fillStyle = "white";
         this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
 
-        this.pattern.rows.forEach((row, rowI) => {
-            row.forEach((stitchValue, rowStitchI) => {
+        this.patternRows.forEach((row, rowI) => {
+            row.forEach((_, rowStitchI) => {
 
                 const margin = model.isStitchDoneYet(rowI, rowStitchI) ? 0 : 1;
-                //var stitch = scope.ctrl.getRowFlippedOrWhatever(i)[j];
-                //
+                const stitch = model.isRightSide() ? this.patternRows[rowI][rowStitchI] : this.patternRowsReversed[rowI][rowStitchI];
                 const left = rowStitchI * this.stitchWidth + margin;
                 const top = rowI * this.stitchHeight + margin;
                 const width = this.stitchWidth - (margin * 2);
                 const height = this.stitchHeight - (margin * 2);
 
-                this.ctx.fillStyle = stitchValue ? '#B20000' : '#CECECE';
+                this.ctx.fillStyle = stitch ? '#B20000' : '#CECECE';
                 this.ctx.fillRect(left, top, width, height);
             })
         });

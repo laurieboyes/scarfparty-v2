@@ -33,26 +33,28 @@ function getPixelsOnOff(imageData) {
         .map(pixel => pixel > 127 ? 0 : 1);
 }
 
+function getRows(img) {
+
+	const rows = [];
+	let currentRow = [];
+
+	getPixelsOnOff(getImageData(img)).forEach(pixel => {
+		currentRow.push(pixel);
+		if (currentRow.length >= img.width) {
+			rows.push(currentRow);
+			currentRow = [];
+		}
+	});
+
+	return rows;
+}
+
 export default class Pattern {
     constructor(img) {
 
         this.height = img.height;
         this.width = img.width;
+        this.rows = getRows(img);
 
-        this.rows = [];
-        this.rowsReversed = [];
-
-        // populate rows and rowsRevered arrays
-        let currentRow = [];
-        getPixelsOnOff(getImageData(img)).forEach(pixel => {
-
-            currentRow.push(pixel);
-
-            if (currentRow.length >= img.width) {
-                this.rows.push(currentRow);
-                this.rowsReversed.push(currentRow.slice().reverse());
-                currentRow = [];
-            }
-        });
     }
 }
