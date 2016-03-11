@@ -5,8 +5,14 @@ const model = {
 	increment: 6,
 	pattern: null,
 	colours: {
-		a: '#CECECE',
-		b: '#B20000'
+		notDone: {
+			a: '#CECECE',
+			b: '#B20000'
+		},
+		done: {
+			a: '#808080',
+			b: '#660000'
+		}
 	},
 
 	getRowsDone,

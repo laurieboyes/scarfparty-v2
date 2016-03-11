@@ -47,20 +47,16 @@ export default class PatternDisplay {
 		this.patternRows.forEach((row, rowI) => {
 			row.forEach((_, rowStitchI) => {
 
-				const margin = model.isStitchDoneYet(rowI, rowStitchI) ? 0 : 1;
+				const thisStitchDone = model.isStitchDoneYet(rowI, rowStitchI);
+				const margin = thisStitchDone ? 0 : 1;
 				const stitch = model.isRightSide() ? this.patternRows[rowI][rowStitchI] : this.patternRowsReversed[rowI][rowStitchI];
 				const left = rowStitchI * this.stitchWidth + margin;
 				const top = rowI * this.stitchHeight + margin;
 				const width = this.stitchWidth - (margin * 2);
 				const height = this.stitchHeight - (margin * 2);
 
-
-				if (model.isRightSide()) {
-					this.ctx.fillStyle = stitch ? model.colours.b : model.colours.a;
-				} else {
-					this.ctx.fillStyle = stitch ? model.colours.a : model.colours.b;
-				}
-
+				// mad logic here
+				this.ctx.fillStyle = model.colours[thisStitchDone ? 'done' : 'notDone'][!!stitch !== model.isRightSide() ? 'a' : 'b'];
 				this.ctx.fillRect(left, top, width, height);
 			})
 		});
