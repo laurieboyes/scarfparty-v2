@@ -4,6 +4,10 @@ const model = {
 	stitch: 0,
 	increment: 6,
 	pattern: null,
+	colours: {
+		a: '#CECECE',
+		b: '#B20000'
+	},
 
 	getRowsDone,
 	getRowStitchesDone,
