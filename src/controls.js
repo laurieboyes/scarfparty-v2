@@ -12,8 +12,8 @@ export default function init() {
 		}
 	});
 
-	const doStitchButton = document.querySelector('.js-do-stitch');
-	doStitchButton.addEventListener('click', () => p.publish('/stitch/do'));
+	document.querySelector('.js-do-stitch').addEventListener('click', () => p.publish('/stitch/do'));
+	document.querySelector('.js-do-unpick').addEventListener('click', () => p.publish('/stitch/unpick'));
 
 
 	// event reacting
