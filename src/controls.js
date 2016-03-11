@@ -12,7 +12,9 @@ export default function init() {
 	// event firing
 
 	stitchCountInput.addEventListener('input', () => {
-		if(stitchCountInput.value.length && parseInt(stitchCountInput.value) !== model.stitch) {
+		let intVal = parseInt(stitchCountInput.value);
+
+		if(!isNaN(intVal) && intVal >= 0 && intVal !== model.stitch) {
 			p.publish('/stitch', parseInt(stitchCountInput.value));
 		}
 	});
