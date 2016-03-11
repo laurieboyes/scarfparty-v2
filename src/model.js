@@ -3,23 +3,38 @@ import p from 'pubsub'
 const model = {
 	stitch: 0,
 	increment: 6,
-	width: null,
+	pattern: null,
 
 	getRowsDone,
 	getRowStitchesDone,
-	isRightSide
+	isRightSide,
+	isStitchDoneYet
 };
 
 function getRowsDone() {
-	return Math.floor(model.stitch / model.width);
+	return Math.floor(model.stitch / model.pattern.width);
 }
 
 function getRowStitchesDone () {
-	return model.stitch % model.width;
+	return model.stitch % model.pattern.width;
 }
 
 function isRightSide() {
-	return Math.floor(model.stitch / model.width) % 2 === 0;
+	return Math.floor(model.stitch / model.pattern.width) % 2 === 0;
+}
+
+/**
+ * @param thisRow row in question (0 being the topmost and last)
+ * @param thisRowStitch
+ * @returns {boolean}
+ */
+function isStitchDoneYet(thisRow, thisRowStitch) {
+
+	const thisStitch = (thisRow * model.pattern.width) + thisRowStitch;
+	const totalStitches = model.pattern.width * model.pattern.height;
+	const remainingStitches = totalStitches - model.stitch;
+
+	return thisStitch >= remainingStitches;
 }
 
 

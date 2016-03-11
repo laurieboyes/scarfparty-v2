@@ -18,9 +18,9 @@ ready(() =>{
     img.src = 'http://static.lrnk.co.uk/scarf/finalharoltheocubertlauren.png';
     img.onload = function () {
 
-	    model.width = img.width;
-
         const pattern = new Pattern(img);
+	    model.pattern = pattern;
+
         const patternDisplay = new PatternDisplay(pattern);
 
         patternDisplay.draw();

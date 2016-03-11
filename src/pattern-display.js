@@ -42,15 +42,14 @@ export default class PatternDisplay {
         this.ctx.fillStyle = "white";
         this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
 
-        this.pattern.rows.forEach((row, i) => {
-            row.forEach((stitchValue, j) => {
+        this.pattern.rows.forEach((row, rowI) => {
+            row.forEach((stitchValue, rowStitchI) => {
 
-                //var margin = scope.ctrl.isStitchDoneYet(i, j) ? 0 : 1;
-                const margin = 1;
+                const margin = model.isStitchDoneYet(rowI, rowStitchI) ? 0 : 1;
                 //var stitch = scope.ctrl.getRowFlippedOrWhatever(i)[j];
                 //
-                const left = j * this.stitchWidth + margin;
-                const top = i * this.stitchHeight + margin;
+                const left = rowStitchI * this.stitchWidth + margin;
+                const top = rowI * this.stitchHeight + margin;
                 const width = this.stitchWidth - (margin * 2);
                 const height = this.stitchHeight - (margin * 2);
 
