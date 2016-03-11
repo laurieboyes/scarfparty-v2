@@ -1,6 +1,7 @@
 import Pattern from './src/pattern'
 import PatternDisplay from './src/pattern-display'
 import initControls from './src/controls'
+import model from './src/model'
 import {ready} from './src/util'
 
 ready(() =>{
@@ -15,6 +16,9 @@ ready(() =>{
 
     img.src = 'http://static.lrnk.co.uk/scarf/finalharoltheocubertlauren.png';
     img.onload = function () {
+
+	    model.width = img.width;
+
         const pattern = new Pattern(img);
         const patternDisplay = new PatternDisplay(pattern);
 

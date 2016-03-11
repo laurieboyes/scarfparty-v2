@@ -6,8 +6,16 @@
 	width: 100%;
 }
 
-.which-side {
+.current-side {
 	float: right;
+}
+
+.current-row {
+	font-weight: bold;
+}
+
+.current-row-stitch {
+	font-weight: bold;
 }
 
 .stitch-button {
