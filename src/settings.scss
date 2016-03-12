@@ -40,6 +40,7 @@
 
 .settings__colour__input {
 	float: left;
+	width: 130px;
 }
 
 .settings__colour__preview {
@@ -50,4 +51,8 @@
 	margin-left: 20px;
 
 	background-color: red;
+}
+
+.settings__increment {
+	width: 100%;
 }
