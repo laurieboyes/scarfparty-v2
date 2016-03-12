@@ -1,4 +1,4 @@
-import Pattern from '../src/pattern.js'
+import Pattern from '../../src/pattern.js'
 
 describe('Extracting the pattern from an image', function() {
     it('Should get a sweet sweet pattern from the test image', function(done) {

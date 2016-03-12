@@ -7,6 +7,6 @@
     "origami-build-tools": "^5.0.0"
   },
   "scripts": {
-    "test": "obt build --js=test/tests.js --buildJs=tests-compiled.js; ./node_modules/.bin/mocha-phantomjs test/index.html"
+    "test": "obt build --js=test/tests/*.js --buildJs=tests-compiled.js; ./node_modules/.bin/mocha-phantomjs test/index.html"
   }
 }

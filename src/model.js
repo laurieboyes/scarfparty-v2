@@ -33,14 +33,13 @@ function isRightSide() {
 	return Math.floor(model.stitch / model.pattern.width) % 2 === 0;
 }
 
-/**
- * @param thisRow row in question (0 being the topmost and last)
- * @param thisRowStitch
- * @returns {boolean}
- */
-function isStitchDoneYet(thisRow, thisRowStitch) {
+function isStitchDoneYet(rowIndexFromTop, rowStitch) {
 
-	const thisStitch = (thisRow * model.pattern.width) + thisRowStitch;
+	if(rowStitch > (model.pattern.width - 1)) {
+		throw new Error(`Row stitch ${rowStitch} out of range, must be between 0 and ${model.pattern.width - 1}`);
+	}
+
+	const thisStitch = (rowIndexFromTop * model.pattern.width) + rowStitch;
 	const totalStitches = model.pattern.width * model.pattern.height;
 	const remainingStitches = totalStitches - model.stitch;
 
