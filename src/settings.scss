@@ -12,12 +12,25 @@
 	}
 }
 
+.settings__left-col {
+	float: left;
+	width: 20%;
+	padding-right: 3%;
+	border-right: 1px solid gray;
+}
+
+.settings__right-col {
+	float: left;
+	width: 72%;
+	padding-left: 3%;
+}
+
 .settings__pattern-url {
 	width: 100%;
 }
 
 .settings__pattern-preview {
-	height: 150px;
+	width: 100%;
 	display: block;
 }
 

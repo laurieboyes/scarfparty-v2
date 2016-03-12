@@ -24,34 +24,41 @@
 			<input class="stitch-button stitch-button--unpick js-do-unpick" type="button" value="Unpick 6"/>
 			<input class="stitch-button js-do-stitch" type="button" value="Stitch 6"/>
 		</p>
+
 		<p><a href="#" class="js-settings-open">settings</a></p>
 	</div>
 
 	<div class="settings js-settings">
 		<h1>Project settings</h1>
-		<label for="patternUrl">Pattern URL</label>
-		<input id="patternUrl" class="settings__pattern-url js-pattern-url"
-			   value="http://static.lrnk.co.uk/scarf/finalharoltheocubertlauren.png"/>
-		<label>Pattern preview</label>
-		<img class="settings__pattern-preview" src="http://static.lrnk.co.uk/scarf/finalharoltheocubertlauren.png">
 
-		<div class="settings__colour">
-			<label for="colour1">Colour 1</label>
-			<input class="settings__colour__input js-colour-1" id="colour1" value="#F00">
-			<div class="settings__colour__preview"></div>
+		<div class="settings__left-col">
+			<img class="settings__pattern-preview" src="http://static.lrnk.co.uk/scarf/finalharoltheocubertlauren.png">
 		</div>
+		<div class="settings__right-col">
+			<label for="patternUrl">Pattern URL</label>
+			<input id="patternUrl" class="settings__pattern-url js-pattern-url"
+				   value="http://static.lrnk.co.uk/scarf/finalharoltheocubertlauren.png"/>
 
-		<div class="settings__colour">
-			<label for="colour2">Colour 2</label>
-			<input class="settings__colour__input js-colour-2" id="colour2" value="#FFF">
-			<div class="settings__colour__preview"></div>
+			<div class="settings__colour">
+				<label for="colour1">Colour 1</label>
+				<input class="settings__colour__input js-colour-1" id="colour1" value="#F00">
+
+				<div class="settings__colour__preview"></div>
+			</div>
+
+			<div class="settings__colour">
+				<label for="colour2">Colour 2</label>
+				<input class="settings__colour__input js-colour-2" id="colour2" value="#FFF">
+
+				<div class="settings__colour__preview"></div>
+			</div>
+
+			<label for="increment">Stitches at a time</label>
+			<input id="increment" class="settings__increment js-increment" value="6"/>
+
+			<p><a class="js-settings-save-and-close" href="#">save and close</a></p>
+
+			<p><a class="js-settings-close" href="#">close without saving</a></p>
 		</div>
-
-		<label for="increment">Stitches at a time</label>
-		<input id="increment" class="settings__increment js-increment" value="6"/>
-
-		<p><a class="js-settings-save-and-close" href="#">save and close</a></p>
-
-		<p><a class="js-settings-close" href="#">close without saving</a></p>
 	</div>
 </div>
