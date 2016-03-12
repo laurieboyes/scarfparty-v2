@@ -6,18 +6,20 @@
 	<link rel="stylesheet" href="build/main.css" />
 </head>
 
-<div class="pattern-container js-pattern-container">
-    <canvas class="pattern"></canvas>
-</div>
-
-<div class="controls">
-	<div class="control stitch">
-		<label>Stitch</label><span class="current-side js-side">RS</span>
-		<input class="stitch-count js-stitch-count-input" type="number" min="0" value="0"/>
+<div class="container">
+	<div class="pattern-container js-pattern-container">
+		<canvas class="pattern"></canvas>
 	</div>
-	<p>Rows done: <span class="current-row js-row">0</span> Row stitches done: <span class="current-row-stitch js-row-stitch">0</span></p>
-	<div class="control do-stitch">
-		<input class="stitch-button stitch-button--unpick js-do-unpick" type="button" value="Unpick 6"/>
-		<input class="stitch-button js-do-stitch" type="button" value="Stitch 6"/>
+
+	<div class="controls">
+		<div class="control stitch">
+			<label>Stitch</label><span class="current-side js-side">RS</span>
+			<input class="stitch-count js-stitch-count-input" type="number" min="0" value="0"/>
+		</div>
+		<p>Rows done: <span class="current-row js-row">0</span> Row stitches done: <span class="current-row-stitch js-row-stitch">0</span></p>
+		<div class="control do-stitch">
+			<input class="stitch-button stitch-button--unpick js-do-unpick" type="button" value="Unpick 6"/>
+			<input class="stitch-button js-do-stitch" type="button" value="Stitch 6"/>
+		</div>
 	</div>
 </div>
