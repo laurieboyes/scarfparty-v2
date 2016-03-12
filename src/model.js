@@ -49,7 +49,10 @@ function isStitchDoneYet(rowIndexFromTop, rowStitch) {
 
 // event handling
 
-p.subscribe('/stitch', stitch => model.stitch = stitch);
+p.subscribe('/stitch', stitch => {
+	model.stitch = stitch;
+	localStorage.stitch = stitch;
+});
 p.subscribe('/stitch/do', () => p.publish('/stitch', model.stitch + model.increment));
 p.subscribe('/stitch/unpick', () => p.publish('/stitch', Math.max(model.stitch - model.increment, 0)));
 
