@@ -11,3 +11,30 @@
 		display: block;
 	}
 }
+
+.settings__pattern-url {
+	width: 100%;
+}
+
+.settings__pattern-preview {
+	height: 150px;
+	display: block;
+}
+
+.settings__colour {
+	overflow: hidden;
+}
+
+.settings__colour__input {
+	float: left;
+}
+
+.settings__colour__preview {
+
+	display: inline-block;
+	width: 35px;
+	height: 35px;
+	margin-left: 20px;
+
+	background-color: red;
+}
