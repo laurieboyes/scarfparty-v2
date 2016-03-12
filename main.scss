@@ -1,5 +1,6 @@
 @import "src/pattern-display";
 @import "src/controls";
+@import "src/settings";
 
 body {
 	font-size: 25px;
@@ -9,6 +10,8 @@ body {
 .container {
 	max-width: 730px;
 	margin: auto;
+	overflow: hidden;
+	position: relative;
 }
 
 input {

@@ -1,6 +1,7 @@
 import Pattern from './src/pattern'
 import PatternDisplay from './src/pattern-display'
 import initControls from './src/controls'
+import initSettings from './src/settings'
 import model from './src/model'
 import p from 'pubsub'
 import {ready} from './src/util'
@@ -8,6 +9,7 @@ import {ready} from './src/util'
 ready(() => {
 
 	initControls();
+	initSettings();
 
 	const img = new Image();
 

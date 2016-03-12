@@ -16,10 +16,19 @@
 			<label>Stitch</label><span class="current-side js-side">RS</span>
 			<input class="stitch-count js-stitch-count-input" type="number" min="0" value="0"/>
 		</div>
-		<p>Rows done: <span class="current-row js-row">0</span> Row stitches done: <span class="current-row-stitch js-row-stitch">0</span></p>
-		<div class="control do-stitch">
+		<p>
+			Rows done: <span class="current-row js-row">0</span><br/>
+			Row stitches done: <span class="current-row-stitch js-row-stitch">0</span>
+		</p>
+		<p class="control do-stitch">
 			<input class="stitch-button stitch-button--unpick js-do-unpick" type="button" value="Unpick 6"/>
 			<input class="stitch-button js-do-stitch" type="button" value="Stitch 6"/>
-		</div>
+		</p>
+		<p><a href="#" class="js-settings-open">settings</a></p>
+	</div>
+
+	<div class="settings js-settings">
+		<h1>Project settings</h1>
+		<p class="settings__close"><a class="js-settings-close" href="#">close</a></p>
 	</div>
 </div>
