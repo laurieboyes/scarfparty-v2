@@ -29,10 +29,15 @@ export default class PatternDisplay {
 
 		// event handling
 
-		p.subscribe('/stitch', () => {
+		this.subscriptions = [];
+
+		const stitchHandler = () => {
 			this.draw();
 			this.scrollToRow(model.getRowsDone())
-		})
+		};
+		p.subscribe('/stitch', stitchHandler);
+
+		this.subscriptions.push(stitchHandler);
 	}
 
 	scrollToRow (row) {
@@ -60,5 +65,9 @@ export default class PatternDisplay {
 				this.ctx.fillRect(left, top, width, height);
 			})
 		});
+	}
+
+	tearDown () {
+		this.subscriptions.forEach(subscription => p.unsubscribe(subscription));
 	}
 }

@@ -1,5 +1,3 @@
-import Pattern from './src/pattern'
-import PatternDisplay from './src/pattern-display'
 import initControls from './src/controls'
 import initSettings from './src/settings/settings'
 import model from './src/model'
@@ -14,13 +12,10 @@ ready(() => {
 
 	loadImage('http://static.lrnk.co.uk/scarf/finalharoltheocubertlauren.png')
 		.then(img => {
-			const pattern = new Pattern(img);
-			model.pattern = pattern;
 
-			const patternDisplay = new PatternDisplay(pattern);
-
-			patternDisplay.draw();
-
+			p.publish('/save-settings', {
+				patternImg: img
+			});
 			p.publish('/stitch', +localStorage.getItem('stitch') || 0);
 		})
 });

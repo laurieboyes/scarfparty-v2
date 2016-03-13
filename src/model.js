@@ -1,10 +1,12 @@
 import p from 'pubsub';
 import Pattern from './pattern'
+import PatternDisplay from './pattern-display'
 
 const model = {
 	stitch: 0,
 	increment: 6,
 	pattern: null,
+	patternDisplay: null,
 	colours: {
 		notDone: {
 			a: '#CECECE',
@@ -59,7 +61,13 @@ p.subscribe('/stitch/do', () => p.publish('/stitch', model.stitch + model.increm
 p.subscribe('/stitch/unpick', () => p.publish('/stitch', Math.max(model.stitch - model.increment, 0)));
 
 p.subscribe('/save-settings', settingsModel => {
+
 	model.pattern = new Pattern(settingsModel.patternImg);
+
+	if(model.patternDisplay) {
+		model.patternDisplay.tearDown();
+	}
+	model.patternDisplay = new PatternDisplay(model.pattern);
 });
 
 export default model;
