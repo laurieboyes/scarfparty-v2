@@ -34,8 +34,18 @@ export default class PatternDisplay {
 		this.subscriptions.push(stitchHandler);
 	}
 
+	/**
+	 * Scroll the display so that the given row is roughly 2 thirds from the top
+	 * @param row
+	 */
 	scrollToRow (row) {
-		this.containerEl.scrollTop = (this.canvasHeight - (this.stitchHeight * row)) - (this.stitchHeight * 6);
+
+		const scrollTopAtBottom = this.canvasHeight -  this.containerEl.offsetHeight;
+		const offsetForCurrentRow = (row * this.stitchHeight);
+		const rowsDisplayed = this.containerEl.offsetHeight / this.stitchHeight;
+		const offsetForShowingPrevious = (rowsDisplayed / 3) * this.stitchHeight;
+
+		this.containerEl.scrollTop = scrollTopAtBottom - (offsetForCurrentRow - offsetForShowingPrevious);
 	}
 
 	draw () {
