@@ -4,31 +4,25 @@ import initControls from './src/controls'
 import initSettings from './src/settings/settings'
 import model from './src/model'
 import p from 'pubsub'
-import {ready} from './src/util'
+import ready from './src/util/ready'
+import loadImage from './src/util/loadImage'
 
 ready(() => {
 
 	initControls();
 	initSettings();
 
-	const img = new Image();
+	loadImage('http://static.lrnk.co.uk/scarf/finalharoltheocubertlauren.png')
+		.then(img => {
+			const pattern = new Pattern(img);
+			model.pattern = pattern;
 
-	// if image isn't on static.lrnk.co.uk (e.g. if I'm running it locally), we need an Access-Control-Allow-Origin: *
-	// header on the image
-	img.crossOrigin = 'Anonymous';
+			const patternDisplay = new PatternDisplay(pattern);
 
-	img.src = 'http://static.lrnk.co.uk/scarf/finalharoltheocubertlauren.png';
-	img.onload = function () {
+			patternDisplay.draw();
 
-		const pattern = new Pattern(img);
-		model.pattern = pattern;
-
-		const patternDisplay = new PatternDisplay(pattern);
-
-		patternDisplay.draw();
-
-		p.publish('/stitch', +localStorage.getItem('stitch') || 0);
-	};
+			p.publish('/stitch', +localStorage.getItem('stitch') || 0);
+		})
 });
 
 

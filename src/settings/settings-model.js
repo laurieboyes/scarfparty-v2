@@ -1,7 +1,7 @@
 import p from 'pubsub';
 
 const settingsModel = {
-	patternUrl: null,
+	patternImg: null,
 	colours: {
 		a:null,
 		b:null
@@ -9,6 +9,6 @@ const settingsModel = {
 	increment: null
 };
 
-p.subscribe('/settings/patternUrl', newUrl => settingsModel.patternUrl = newUrl);
+p.subscribe('/settings/patternImg', newImg => settingsModel.patternImg = newImg);
 
 export default settingsModel;

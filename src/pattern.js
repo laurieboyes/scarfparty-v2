@@ -55,7 +55,7 @@ export default class Pattern {
         this.height = img.height;
         this.width = img.width;
         this.rows = getRows(img);
-	    this.imgSrc = img.src;
+	    this.img = img;
 
     }
 }

@@ -1,5 +1,6 @@
 import p from 'pubsub';
 import debounce from '../../node_modules/lodash/function/debounce';
+import loadImage from '../util/loadImage'
 
 let patternPreviewImageContainer;
 let patternPreviewError;
@@ -29,17 +30,13 @@ function showImage(img) {
 }
 
 function updatePatternUrl(newUrl) {
-	const img = new Image();
-	img.crossOrigin = 'Anonymous';
-	img.src = newUrl;
-
-	img.onload = function () {
-		showImage(img);
-	};
-
-	img.onerror = function() {
-		showError('Couldn\'t get image');
-	}
+	return loadImage(newUrl)
+		.then(img => {
+			p.publish('/settings/patternImg', img);
+		})
+		.catch(() => {
+			showError('Couldn\'t get image');
+		});
 }
 
 export default function init() {
@@ -51,6 +48,10 @@ export default function init() {
 	const updatePatternUrlDebounced = debounce(newUrl => {
 		updatePatternUrl(newUrl);
 	}, 500);
+
+	p.subscribe('/settings/patternImg', newImg => {
+		showImage(newImg);
+	});
 
 	p.subscribe('/settings/patternUrl', newUrl => {
 		showLoadingSpinner();

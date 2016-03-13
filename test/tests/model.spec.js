@@ -1,5 +1,6 @@
 import model from '../../src/model.js'
 import p from 'pubsub'
+import loadImage from '../../src/util/loadImage'
 
 
 describe('Model', function() {
@@ -149,6 +150,23 @@ describe('Model', function() {
 
 			p.publish('/stitch/unpick');
 		});
+
+		it('should update the pattern on settings update', function() {
+
+			model.pattern = {imgSrc: 'whatever'};
+			expect(model.pattern.imgSrc).to.equal('whatever');
+
+			return loadImage('pattern-image.png')
+				.then(img => {
+
+					const settingsModel = {
+						patternImg: img
+					};
+
+					p.publish('/save-settings', settingsModel);
+					expect(model.pattern.img).to.equal(img);
+				})
+		})
 
 	});
 
