@@ -17,8 +17,8 @@ export default function init() {
 	// control event listeners
 
 	openEl.addEventListener('click', () => {
-		settingsEl.classList.add('is-open');
-		p.publish('/settings/patternImg', model.pattern.img);
+		p.publish('/settings/open');
+		p.publish('/settings/getFromModel');
 	});
 
 	closeEl.addEventListener('click', () => {
@@ -36,6 +36,14 @@ export default function init() {
 
 
 	// other event handling
+
+	p.subscribe('/settings/open', () => {
+		settingsEl.classList.add('is-open');
+	});
+
+	p.subscribe('/settings/getFromModel', () => {
+		p.publish('/settings/patternImg', model.pattern.img);
+	});
 
 	p.subscribe('/settings/patternImg', newImg => {
 		if(newImg.src !== patternUrlEl.value) {

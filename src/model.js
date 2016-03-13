@@ -68,6 +68,8 @@ p.subscribe('/save-settings', settingsModel => {
 		model.patternDisplay.tearDown();
 	}
 	model.patternDisplay = new PatternDisplay(model.pattern);
+
+	localStorage.patternUrl = settingsModel.patternImg.src;
 });
 
 export default model;

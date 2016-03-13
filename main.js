@@ -10,14 +10,20 @@ ready(() => {
 	initControls();
 	initSettings();
 
-	loadImage('http://static.lrnk.co.uk/scarf/finalharoltheocubertlauren.png')
-		.then(img => {
+	if(localStorage.getItem('patternUrl')) {
+		loadImage(localStorage.getItem('patternUrl'))
+			.then(img => {
 
-			p.publish('/save-settings', {
-				patternImg: img
-			});
-			p.publish('/stitch', +localStorage.getItem('stitch') || 0);
-		})
+				p.publish('/save-settings', {
+					patternImg: img
+				});
+				p.publish('/stitch', +localStorage.getItem('stitch') || 0);
+			})
+	} else {
+		p.publish('/settings/open');
+	}
+
+
 });
 
 
