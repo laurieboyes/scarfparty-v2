@@ -78,3 +78,12 @@
 		display: block;
 	}
 }
+
+.pattern-preview__loading-spinner {
+	width: 100%;
+	display: none;
+
+	&.is-showing {
+		display: block;
+	}
+}

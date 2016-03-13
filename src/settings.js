@@ -28,6 +28,9 @@ export default function init() {
 	}, 500);
 
 	patternUrlEl.addEventListener('input', () => {
+		patternPreviewLoadingSpinner.classList.add('is-showing');
+		patternPreviewError.classList.remove('is-showing');
+		patternPreviewImageContainer.classList.remove('is-showing');
 		debouncedUpdatePatternUrl();
 	})
 }
@@ -37,6 +40,7 @@ export default function init() {
 
 const patternPreviewImageContainer = document.querySelector('.js-pattern-preview-image-container');
 const patternPreviewError = document.querySelector('.js-pattern-preview-error');
+const patternPreviewLoadingSpinner = document.querySelector('.js-pattern-preview-loading-spinner');
 
 function updatePatternUrl(patternUrl) {
 	console.log('beep', patternUrl);
@@ -49,6 +53,7 @@ function updatePatternUrl(patternUrl) {
 	img.onload = function () {
 		patternPreviewError.classList.remove('is-showing');
 		patternPreviewImageContainer.classList.add('is-showing');
+		patternPreviewLoadingSpinner.classList.remove('is-showing');
 
 		img.classList.add('pattern-preview__image');
 		patternPreviewImageContainer.innerHTML = '';
@@ -58,6 +63,7 @@ function updatePatternUrl(patternUrl) {
 	img.onerror = function() {
 		patternPreviewImageContainer.classList.remove('is-showing');
 		patternPreviewError.classList.add('is-showing');
+		patternPreviewLoadingSpinner.classList.remove('is-showing');
 		patternPreviewError.innerHTML = 'Couldn\'t get image';
 	}
 
