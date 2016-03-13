@@ -28,11 +28,16 @@
 		<p><a href="#" class="js-settings-open">settings</a></p>
 	</div>
 
-	<div class="settings js-settings">
+	<div class="settings js-settings is-open">
 		<h1>Project settings</h1>
 
 		<div class="settings__left-col">
-			<img class="settings__pattern-preview" src="http://static.lrnk.co.uk/scarf/finalharoltheocubertlauren.png">
+			<div class="pattern-preview js-pattern-preview">
+				<p class="pattern-preview__error js-pattern-preview-error"></p>
+				<div class="pattern-preview__image-container js-pattern-preview-image-container is-showing">
+					<img class="pattern-preview__image" src="http://static.lrnk.co.uk/scarf/finalharoltheocubertlauren.png">
+				</div>
+			</div>
 		</div>
 		<div class="settings__right-col">
 			<label class="settings-label" for="patternUrl">Pattern URL</label>

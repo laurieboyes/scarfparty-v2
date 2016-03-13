@@ -1,4 +1,4 @@
-import p from 'pubsub'
+import p from 'pubsub';
 
 const model = {
 	stitch: 0,
