@@ -7,12 +7,12 @@
 function getImageData(img) {
     //Create a canvas in memory that we can use to get the pattern image data
     const canvas = document.createElement('canvas');
-    canvas.width = img.width;
-    canvas.height = img.height;
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
 
     const ctx = canvas.getContext('2d');
     ctx.drawImage(img, 0, 0);
-    return Array.from(ctx.getImageData(0, 0, img.width, img.height).data);
+    return Array.from(ctx.getImageData(0, 0, img.naturalWidth, img.naturalHeight).data);
 }
 
 
@@ -40,7 +40,7 @@ function getRows(img) {
 
 	getPixelsOnOff(getImageData(img)).forEach(pixel => {
 		currentRow.push(pixel);
-		if (currentRow.length >= img.width) {
+		if (currentRow.length >= img.naturalWidth) {
 			rows.push(currentRow);
 			currentRow = [];
 		}
@@ -51,10 +51,10 @@ function getRows(img) {
 
 export default class Pattern {
     constructor(img) {
+        this.height = img.naturalHeight;
+        this.width = img.naturalWidth;
 
-        this.height = img.height;
-        this.width = img.width;
-        this.rows = getRows(img);
+	    this.rows = getRows(img);
 	    this.img = img;
 
     }
