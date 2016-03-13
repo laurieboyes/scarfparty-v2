@@ -1,3 +1,5 @@
+@import "pattern-preview";
+
 .settings {
 	background-color: white;
 	position: absolute;
@@ -55,35 +57,4 @@
 
 .settings__increment {
 	width: 100%;
-}
-
-.pattern-preview__image-container {
-	width: 100%;
-	display: none;
-	
-	&.is-showing {
-		display: block;
-	}
-}
-
-.pattern-preview__image {
-	width: 100%;
-}
-
-.pattern-preview__error {
-	display: none;
-	color: red;
-
-	&.is-showing {
-		display: block;
-	}
-}
-
-.pattern-preview__loading-spinner {
-	width: 100%;
-	display: none;
-
-	&.is-showing {
-		display: block;
-	}
 }
