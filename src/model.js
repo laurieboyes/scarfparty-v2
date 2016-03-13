@@ -18,11 +18,16 @@ const model = {
 		}
 	},
 
+	getTotalStitches,
 	getRowsDone,
 	getRowStitchesDone,
 	isRightSide,
 	isStitchDoneYet
 };
+
+function getTotalStitches() {
+	return model.pattern.width * model.pattern.height;
+}
 
 function getRowsDone() {
 	return Math.floor(model.stitch / model.pattern.width);
@@ -57,7 +62,7 @@ p.subscribe('/stitch', stitch => {
 	localStorage.stitch = stitch;
 });
 
-p.subscribe('/stitch/do', () => p.publish('/stitch', Math.min(model.stitch + model.increment, model.pattern.width * model.pattern.height)));
+p.subscribe('/stitch/do', () => p.publish('/stitch', Math.min(model.stitch + model.increment, getTotalStitches())));
 p.subscribe('/stitch/unpick', () => p.publish('/stitch', Math.max(model.stitch - model.increment, 0)));
 
 p.subscribe('/save-settings', settingsModel => {

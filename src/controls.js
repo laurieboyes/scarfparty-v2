@@ -14,8 +14,14 @@ export default function init() {
 	stitchCountInput.addEventListener('input', () => {
 		let intVal = parseInt(stitchCountInput.value);
 
-		if(!isNaN(intVal) && intVal >= 0 && intVal !== model.stitch) {
+		if(!isNaN(intVal) && intVal >= 0 && intVal <= model.getTotalStitches() && intVal !== model.stitch) {
 			p.publish('/stitch', parseInt(stitchCountInput.value));
+		}
+	});
+
+	stitchCountInput.addEventListener('focusout', () => {
+		if(+stitchCountInput.value !== model.stitch) {
+			stitchCountInput.value = model.stitch;
 		}
 	});
 
