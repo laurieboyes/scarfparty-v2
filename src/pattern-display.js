@@ -9,12 +9,6 @@ export default class PatternDisplay {
 		this.patternRowsReversed = pattern.rows.map(row => row.slice().reverse());
 
 		this.containerEl = document.querySelector('.js-pattern-container');
-
-		const screenHeight = window.innerHeight
-			|| document.documentElement.clientHeight
-			|| document.body.clientHeight;
-		this.containerEl.style.height = `${screenHeight / 4}px`;
-
 		this.canvasWidth = this.containerEl.offsetWidth;
 		this.canvasHeight = (pattern.height / pattern.width) * this.canvasWidth;
 

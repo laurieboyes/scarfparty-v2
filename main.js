@@ -10,9 +10,22 @@ ready(() => {
 	initControls();
 	initSettings();
 
+	// todo put this somewhere better
+	const patternContainerEl = document.querySelector('.js-pattern-container');
+	const screenHeight = window.innerHeight
+		|| document.documentElement.clientHeight
+		|| document.body.clientHeight;
+	const controlsHeight = document.querySelector('.controls').offsetHeight;
+	const marginCompensation = 38;
+	patternContainerEl.style.height = `${screenHeight - (controlsHeight + marginCompensation)}px`;
+
+
 	if(localStorage.getItem('patternUrl')) {
 		loadImage(localStorage.getItem('patternUrl'))
 			.then(img => {
+
+				document.querySelector('.js-pattern-container-loading-spinner').classList.remove('is-showing');
+				document.querySelector('.js-pattern').classList.add('is-showing');
 
 				p.publish('/save-settings', {
 					patternImg: img

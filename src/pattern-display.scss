@@ -4,3 +4,21 @@
 	overflow: hidden;
 	margin-bottom: 20px;
 }
+
+.pattern-container__loading-spinner {
+	height: 100%;
+	margin: auto;
+	display: none;
+
+	&.is-showing {
+		display: block;
+	}
+}
+
+.pattern-container__pattern {
+	display: none;
+
+	&.is-showing {
+		display: block;
+	}
+}

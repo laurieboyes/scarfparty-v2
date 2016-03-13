@@ -68,6 +68,7 @@ p.subscribe('/save-settings', settingsModel => {
 		model.patternDisplay.tearDown();
 	}
 	model.patternDisplay = new PatternDisplay(model.pattern);
+	p.publish('/stitch', model.stitch);
 
 	localStorage.patternUrl = settingsModel.patternImg.src;
 });
