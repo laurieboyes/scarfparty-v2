@@ -16,7 +16,7 @@ ready(() => {
 		|| document.documentElement.clientHeight
 		|| document.body.clientHeight;
 	const controlsHeight = document.querySelector('.controls').offsetHeight;
-	const marginCompensation = 38;
+	const marginCompensation = 55;
 	patternContainerEl.style.height = `${screenHeight - (controlsHeight + marginCompensation)}px`;
 
 
