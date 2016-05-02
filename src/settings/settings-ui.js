@@ -14,6 +14,8 @@ export default function init() {
 	const patternUrlEl = document.querySelector('.js-pattern-url');
 	const colourAInputEl = document.querySelector('.js-colour-a-input');
 	const colourASwatchEl = document.querySelector('.js-colour-a-swatch');
+	const colourBInputEl = document.querySelector('.js-colour-b-input');
+	const colourBSwatchEl = document.querySelector('.js-colour-b-swatch');
 
 	// control event listeners
 
@@ -39,6 +41,10 @@ export default function init() {
 		p.publish('/settings/ui/colours/a', colourAInputEl.value);
 	});
 
+	colourBInputEl.addEventListener('input', () => {
+		p.publish('/settings/ui/colours/b', colourBInputEl.value);
+	});
+
 
 	// other event handling
 
@@ -58,5 +64,9 @@ export default function init() {
 
 	p.subscribe('/settings/colours/a', newColour => {
 		colourASwatchEl.style.backgroundColor = newColour;
+	});
+
+	p.subscribe('/settings/colours/b', newColour => {
+		colourBSwatchEl.style.backgroundColor = newColour;
 	});
 }

@@ -1,4 +1,4 @@
-import model from '../../src/settings/settings-model.js'
+import settingsModel from '../../src/settings/settings-model.js'
 import p from 'pubsub'
 
 describe('Settings Model', function() {
@@ -6,32 +6,48 @@ describe('Settings Model', function() {
 
 	describe('Colour settings', function() {
 
-		function expectColourUpdate(done, colour) {
-			const colourUpdateEvent = '/settings/colours/a';
-			p.subscribe(colourUpdateEvent, function handler(newColour) {
-				p.unsubscribe(colourUpdateEvent, handler);
-				done(newColour === colour ? null : new Error(`expected ${colour} but got ${newColour}`));
-			});
+		function expectColourUpdate(aOrB, colour) {
+			const colourUpdateEvent = '/settings/colours/' + aOrB;
+
+			return new Promise((resolve, reject) => {
+				p.subscribe(colourUpdateEvent, function handler(newColour) {
+					p.unsubscribe(colourUpdateEvent, handler);
+					expect(settingsModel.colours[aOrB]).to.equal(newColour);
+					if(newColour === colour) {
+						resolve();
+					} else {
+						reject(new Error(`expected ${colour} but got ${newColour}`));
+					}
+				});
+			})
+
 		}
 
-		it('should publish a colour a update when it receives a /settings/ui/colours/a event with a valid hex code with the format e.g. #000', function(done) {
-			expectColourUpdate(done, '#FAF');
-			p.publish('/settings/ui/colours/a', '#FAF');
+		beforeEach(() => {
+			settingsModel.colours = {a: null, b: null}
 		});
 
-		it('should publish a colour a update when it receives a /settings/ui/colours/a event with a valid hex code with the format e.g. 000', function(done) {
-			expectColourUpdate(done, '#000');
-			p.publish('/settings/ui/colours/a', '000');
-		});
+		it('should publish a colour update for A or B where appropriate when it receives a /settings/ui/colours/??? event with a valid hex code', function(done) {
 
-		it('should publish a colour a update when it receives a /settings/ui/colours/a event with a valid hex code with the format e.g. 000000', function(done) {
-			expectColourUpdate(done, '#090789');
-			p.publish('/settings/ui/colours/a', '090789');
-		});
+			const testPassPromises = [];
 
-		it('should publish a colour a update when it receives a /settings/ui/colours/a event with a valid hex code with the format e.g. #000000', function(done) {
-			expectColourUpdate(done, '#090789');
-			p.publish('/settings/ui/colours/a', '#090789');
+			['a','b'].forEach(aOrB => {
+				testPassPromises.push(expectColourUpdate(aOrB, '#FAF'));
+				p.publish('/settings/ui/colours/' + aOrB, '#FAF');
+
+				testPassPromises.push(expectColourUpdate(aOrB, '#FAD'));
+				p.publish('/settings/ui/colours/' + aOrB, 'FAD');
+
+				testPassPromises.push(expectColourUpdate(aOrB, '#000010'));
+				p.publish('/settings/ui/colours/' + aOrB, '#000010');
+
+				testPassPromises.push(expectColourUpdate(aOrB, '#000011'));
+				p.publish('/settings/ui/colours/' + aOrB, '000011');
+			});
+
+			Promise.all(testPassPromises)
+				.then(() => done())
+				.catch(done)
 		});
 
 		it('should not publish a colour a update when it receives a /settings/ui/colours/a event with an invalid hex code', function(done) {
@@ -49,8 +65,7 @@ describe('Settings Model', function() {
 			p.publish('/settings/ui/colours/a');
 
 			// pass if no events handled
-			this.timeout(2000);
-			setTimeout(done, 1000);
+			setTimeout(done, 300);
 
 		});
 	});

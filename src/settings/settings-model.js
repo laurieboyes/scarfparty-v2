@@ -13,16 +13,19 @@ const settingsModel = {
 
 p.subscribe('/settings/patternImg', newImg => settingsModel.patternImg = newImg);
 
-p.subscribe('/settings/ui/colours/a', newColour => {
+function handleUiColourUpdate (aOrB, newColour) {
 	if(hexColourPattern.test(newColour)) {
 		if(!newColour.startsWith('#')) {
 			newColour = '#' + newColour;
 		}
 
-		settingsModel.colours.a = newColour;
-		p.publish('/settings/colours/a', newColour);
+		settingsModel.colours[aOrB] = newColour;
+		p.publish('/settings/colours/' + aOrB, newColour);
 	}
-});
+}
+
+p.subscribe('/settings/ui/colours/a', newColour => handleUiColourUpdate('a', newColour));
+p.subscribe('/settings/ui/colours/b', newColour => handleUiColourUpdate('b', newColour));
 
 
 export default settingsModel;
