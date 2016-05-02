@@ -2,6 +2,7 @@ import p from 'pubsub';
 import Pattern from './pattern'
 import PatternDisplay from './pattern-display'
 import deepCopyObject from './util/deepCopyObject';
+import tweakColourLuminance from './util/tweakColourLuminance';
 
 const model = {
 	stitch: 0,
@@ -77,8 +78,8 @@ p.subscribe('/save-settings', settingsModel => {
 	model.colours = {
 		notDone: deepCopyObject(settingsModel.colours),
 		done: {
-			a: '#808080',
-			b: '#660000'
+			a: tweakColourLuminance(settingsModel.colours.a, -0.4),
+			b: tweakColourLuminance(settingsModel.colours.b, -0.4)
 		}
 	};
 
