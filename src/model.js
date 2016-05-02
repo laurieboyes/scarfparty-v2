@@ -59,11 +59,12 @@ p.subscribe('/stitch/do', () => p.publish('/stitch', Math.min(model.stitch + mod
 p.subscribe('/stitch/unpick', () => p.publish('/stitch', Math.max(model.stitch - model.increment, 0)));
 
 p.subscribe('/settings/open', () => {
-
-	p.publish('/settings/updateFromModel', {
-		patternImg: model.pattern.img,
-		colours: deepCopyObject(model.colours.notDone)
-	});
+	if(model.pattern) {
+		p.publish('/settings/updateFromModel', {
+			patternImg: model.pattern.img,
+			colours: deepCopyObject(model.colours.notDone)
+		});
+	}
 });
 
 p.subscribe('/save-settings', settingsModel => {
