@@ -21,16 +21,32 @@ ready(() => {
 
 
 	if(localStorage.getItem('patternUrl')) {
+
+		const settingsModel = {
+			patternImg: null,
+			colours: null
+		};
+
+		const savedColours = localStorage.getItem('colours');
+		if(savedColours) {
+			settingsModel.colours = JSON.parse(savedColours);
+		} else {
+			settingsModel.colours = {
+				a: '#CECECE',
+				b: '#B20000'
+			}
+		}
+
 		loadImage(localStorage.getItem('patternUrl'))
 			.then(img => {
 
 				document.querySelector('.js-pattern-container-loading-spinner').classList.remove('is-showing');
 				document.querySelector('.js-pattern').classList.add('is-showing');
 
-				p.publish('/save-settings', {
-					patternImg: img
-				});
-				p.publish('/stitch', +localStorage.getItem('stitch') || 0);
+				settingsModel.patternImg = img;
+
+				model.stitch =  +localStorage.getItem('stitch') || 0;
+				p.publish('/save-settings', settingsModel);
 			})
 	} else {
 		p.publish('/settings/open');

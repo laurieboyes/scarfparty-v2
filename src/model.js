@@ -8,16 +8,7 @@ const model = {
 	increment: 6,
 	pattern: null,
 	patternDisplay: null,
-	colours: {
-		notDone: {
-			a: '#CECECE',
-			b: '#B20000'
-		},
-		done: {
-			a: '#808080',
-			b: '#660000'
-		}
-	},
+	colours: null,
 
 	getTotalStitches,
 	getRowsDone,
@@ -82,9 +73,19 @@ p.subscribe('/save-settings', settingsModel => {
 		model.patternDisplay.tearDown();
 	}
 	model.patternDisplay = new PatternDisplay(model.pattern);
+
+	model.colours = {
+		notDone: deepCopyObject(settingsModel.colours),
+		done: {
+			a: '#808080',
+			b: '#660000'
+		}
+	};
+
 	p.publish('/stitch', model.stitch);
 
 	localStorage.patternUrl = settingsModel.patternImg.src;
+	localStorage.colours = JSON.stringify(settingsModel.colours);
 });
 
 export default model;
