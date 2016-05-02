@@ -1,5 +1,5 @@
 import initControls from './src/controls'
-import initSettings from './src/settings/settings'
+import initSettingsUi from './src/settings/settings-ui'
 import model from './src/model'
 import p from 'pubsub'
 import ready from './src/util/ready'
@@ -8,7 +8,7 @@ import loadImage from './src/util/loadImage'
 ready(() => {
 
 	initControls();
-	initSettings();
+	initSettingsUi();
 
 	// todo put this somewhere better
 	const patternContainerEl = document.querySelector('.js-pattern-container');
