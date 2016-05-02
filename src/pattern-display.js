@@ -31,7 +31,18 @@ export default class PatternDisplay {
 		this.subscriptions = [];
 
 		const stitchHandler = () => {
-			this.draw();
+			if (this.hasDrawnThisSession) {
+				this.draw();
+			}
+
+			if (model.isRightSide()) {
+				this.canvasEl.classList.add('is-showing');
+				this.canvasReversedEl.classList.remove('is-showing');
+			} else {
+				this.canvasEl.classList.remove('is-showing');
+				this.canvasReversedEl.classList.add('is-showing');
+			}
+
 			this.scrollToRow(model.getRowsDone())
 		};
 		p.subscribe('/stitch', stitchHandler);
@@ -45,7 +56,7 @@ export default class PatternDisplay {
 	 */
 	scrollToRow (row) {
 
-		const scrollTopAtBottom = this.canvasHeight -  this.containerEl.offsetHeight;
+		const scrollTopAtBottom = this.canvasHeight - this.containerEl.offsetHeight;
 		const offsetForCurrentRow = (row * this.stitchHeight);
 		const rowsDisplayed = this.containerEl.offsetHeight / this.stitchHeight;
 		const offsetForShowingPrevious = (rowsDisplayed / 3) * this.stitchHeight;
@@ -53,44 +64,92 @@ export default class PatternDisplay {
 		this.containerEl.scrollTop = scrollTopAtBottom - (offsetForCurrentRow - offsetForShowingPrevious);
 	}
 
-	draw () {
+	tearDown () {
+		this.subscriptions.forEach(subscription => p.unsubscribe(subscription));
+	}
+
+	draw (fromFresh) {
+
+		this.hasDrawnThisSession = true;
+
+		if (fromFresh) {
+			this._drawRows(0, this.ctx, model.colours, this.patternRows);
+			this._drawRows(0, this.ctxReversed, model.getColoursReversed(), this.patternRows);
+			return;
+		}
 
 		let currentCtx;
 		let colours;
+		let previousStitch;
 
-		if(model.isRightSide()) {
+		if (model.isRightSide()) {
 			currentCtx = this.ctx;
-			this.canvasEl.classList.add('is-showing');
-			this.canvasReversedEl.classList.remove('is-showing');
 			colours = model.colours;
+			previousStitch = this.previousStitch || model.stitch;
+			this.previousStitch = model.stitch;
 		} else {
 			currentCtx = this.ctxReversed;
-			this.canvasEl.classList.remove('is-showing');
-			this.canvasReversedEl.classList.add('is-showing');
 			colours = model.getColoursReversed();
+			previousStitch = this.previousStitchReversed || model.stitch;
+			this.previousStitchReversed = model.stitch;
 		}
 
-		currentCtx.fillStyle = "white";
-		currentCtx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
+		let firstRow;
+		let lastRow;
 
-		this.patternRows.forEach((row, rowI) => {
+		if (previousStitch < model.stitch) {
+			firstRow = model.getRowNumberOfStitch(previousStitch);
+			lastRow = model.getRowNumberOfStitch(model.stitch);
+		} else {
+			firstRow = model.getRowNumberOfStitch(model.stitch);
+			lastRow = model.getRowNumberOfStitch(previousStitch);
+		}
+
+		console.log('firstRow', firstRow);
+		console.log('lastRow + 1', lastRow + 1);
+		console.log('this.patternRows.slice(firstRow, lastRow + 1)', this.patternRows.slice(firstRow, lastRow + 1));
+
+		this._drawRows(firstRow, currentCtx, colours, this.patternRows.slice(firstRow, lastRow + 1));
+	}
+
+	_drawRows (firstRow, context, colours, patternRows) {
+
+		//console.log('firstRow, context, colours, patternRows', firstRow, context, colours, patternRows);
+
+		patternRows.forEach((row, theseRowsI) => {
+
+			const rowI = firstRow + theseRowsI;
+
+			// todo put something like this back in
+			//currentCtx.fillStyle = "white";
+			//currentCtx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
+
 			row.forEach((_, rowStitchI) => {
+
+				console.log('rowI', rowI);
+				console.log('rowStitchI', rowStitchI);
 
 				const thisStitchDone = model.isStitchDoneYet(rowI, rowStitchI);
 				const margin = thisStitchDone ? 0 : 1;
-				const stitchValue = model.isRightSide() ? this.patternRows[rowI][rowStitchI] : this.patternRowsReversed[rowI][rowStitchI];
+
+
+				//console.log('rowI', rowI);
+				//console.log('rowStitchI', rowStitchI);
+				//console.log('patternRows[rowI][rowStitchI]', patternRows[rowI][rowStitchI]);
+
+				const stitchValue = patternRows[theseRowsI][rowStitchI];
 				const left = rowStitchI * this.stitchWidth + margin;
 				const top = rowI * this.stitchHeight + margin;
 				const width = this.stitchWidth - (margin * 2);
 				const height = this.stitchHeight - (margin * 2);
 
-				currentCtx.fillStyle = colours[thisStitchDone ? 'done' : 'notDone'][stitchValue ? 'a' : 'b'];
-				currentCtx.fillRect(left, top, width, height);
+
+				// TODO BRB thisStitchDone is always 0 for some reason????
+				//console.log('thisStitchDone', thisStitchDone);
+
+				context.fillStyle = colours[thisStitchDone ? 'done' : 'notDone'][stitchValue ? 'a' : 'b'];
+				context.fillRect(left, top, width, height);
 			})
 		});
-	}
-
-	tearDown () {
-		this.subscriptions.forEach(subscription => p.unsubscribe(subscription));
 	}
 }

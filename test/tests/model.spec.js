@@ -48,6 +48,20 @@ describe('Model', function() {
 
 	});
 
+	describe('getRowNumberOfStitch', function() {
+
+		it('should return the right row number for the given stitch', function() {
+			model.pattern = {width: 30};
+			expect(model.getRowNumberOfStitch(6)).to.equal(0);
+			expect(model.getRowNumberOfStitch(0)).to.equal(0);
+			expect(model.getRowNumberOfStitch(29)).to.equal(0);
+			expect(model.getRowNumberOfStitch(30)).to.equal(1);
+			expect(model.getRowNumberOfStitch(66)).to.equal(2);
+		})
+
+	});
+
+
 	describe('isRightSide', function() {
 
 		it('should report RS when nothing\'s been done yet', function() {

@@ -14,6 +14,7 @@ const model = {
 	getTotalStitches,
 	getRowsDone,
 	getRowStitchesDone,
+	getRowNumberOfStitch,
 	isRightSide,
 	isStitchDoneYet,
 	getColoursReversed
@@ -24,11 +25,15 @@ function getTotalStitches() {
 }
 
 function getRowsDone() {
-	return Math.floor(model.stitch / model.pattern.width);
+	return model.getRowNumberOfStitch(model.stitch);
 }
 
 function getRowStitchesDone () {
 	return model.stitch % model.pattern.width;
+}
+
+function getRowNumberOfStitch(stitch) {
+	return Math.floor(stitch / model.pattern.width);
 }
 
 function isRightSide() {
@@ -99,6 +104,7 @@ p.subscribe('/save-settings', settingsModel => {
 	};
 
 	p.publish('/stitch', model.stitch);
+	model.patternDisplay.draw(true);
 
 	localStorage.patternUrl = settingsModel.patternImg.src;
 	localStorage.colours = JSON.stringify(settingsModel.colours);
