@@ -15,7 +15,8 @@ const model = {
 	getRowsDone,
 	getRowStitchesDone,
 	isRightSide,
-	isStitchDoneYet
+	isStitchDoneYet,
+	getColoursReversed
 };
 
 function getTotalStitches() {
@@ -45,6 +46,19 @@ function isStitchDoneYet(rowIndexFromTop, rowStitch) {
 	const remainingStitches = totalStitches - model.stitch;
 
 	return thisStitch >= remainingStitches;
+}
+
+function getColoursReversed() {
+	return {
+		done: {
+			a: model.colours.done.b,
+			b: model.colours.done.a
+		},
+		notDone: {
+			a: model.colours.notDone.b,
+			b: model.colours.notDone.a
+		}
+	}
 }
 
 
