@@ -12,7 +12,8 @@ export default function init() {
 	const saveAndCloseEl = document.querySelector('.js-settings-save-and-close');
 	const closeEl = document.querySelector('.js-settings-close');
 	const patternUrlEl = document.querySelector('.js-pattern-url');
-
+	const colourAInputEl = document.querySelector('.js-colour-a-input');
+	const colourASwatchEl = document.querySelector('.js-colour-a-swatch');
 
 	// control event listeners
 
@@ -34,6 +35,10 @@ export default function init() {
 		p.publish('/settings/patternUrl', patternUrlEl.value);
 	});
 
+	colourAInputEl.addEventListener('input', () => {
+		p.publish('/settings/ui/colours/a', colourAInputEl.value);
+	});
+
 
 	// other event handling
 
@@ -49,5 +54,9 @@ export default function init() {
 		if(newImg.src !== patternUrlEl.value) {
 			patternUrlEl.value = newImg.src
 		}
+	});
+
+	p.subscribe('/settings/colours/a', newColour => {
+		colourASwatchEl.style.backgroundColor = newColour;
 	});
 }
