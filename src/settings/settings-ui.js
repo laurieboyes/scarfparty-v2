@@ -58,9 +58,17 @@ export default function init() {
 
 	p.subscribe('/settings/colours/a', newColour => {
 		colourASwatchEl.style.backgroundColor = newColour;
+
+		if(colourAInputEl !== document.activeElement) {
+			colourAInputEl.value = newColour;
+		}
 	});
 
 	p.subscribe('/settings/colours/b', newColour => {
 		colourBSwatchEl.style.backgroundColor = newColour;
+
+		if(colourBInputEl !== document.activeElement) {
+			colourBInputEl.value = newColour;
+		}
 	});
 }
