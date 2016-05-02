@@ -27,5 +27,10 @@ function handleUiColourUpdate (aOrB, newColour) {
 p.subscribe('/settings/ui/colours/a', newColour => handleUiColourUpdate('a', newColour));
 p.subscribe('/settings/ui/colours/b', newColour => handleUiColourUpdate('b', newColour));
 
+p.subscribe('/settings/updateFromModel', model => {
+	p.publish('/settings/patternImg', model.patternImg);
+	p.publish('/settings/colours/a', model.colours.a);
+	p.publish('/settings/colours/b', model.colours.b);
+});
 
 export default settingsModel;

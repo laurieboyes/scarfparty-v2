@@ -1,5 +1,4 @@
 import p from 'pubsub';
-import model from '../model'
 import settingsModel from './settings-model'
 import initPatternPreview from './pattern-preview'
 
@@ -21,7 +20,6 @@ export default function init() {
 
 	openEl.addEventListener('click', () => {
 		p.publish('/settings/open');
-		p.publish('/settings/getFromModel');
 	});
 
 	closeEl.addEventListener('click', () => {
@@ -50,10 +48,6 @@ export default function init() {
 
 	p.subscribe('/settings/open', () => {
 		settingsEl.classList.add('is-open');
-	});
-
-	p.subscribe('/settings/getFromModel', () => {
-		p.publish('/settings/patternImg', model.pattern.img);
 	});
 
 	p.subscribe('/settings/patternImg', newImg => {
