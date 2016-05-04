@@ -94,20 +94,18 @@ export default class PatternDisplay {
 			this.previousStitchReversed = model.stitch;
 		}
 
+		// (first/last from top of image down)
 		let firstRow;
 		let lastRow;
 
 		if (previousStitch < model.stitch) {
-			firstRow = model.getRowNumberOfStitch(previousStitch);
-			lastRow = model.getRowNumberOfStitch(model.stitch);
+			// todo understand why this is the magic formula
+			lastRow = (model.pattern.height - model.getRowNumberOfStitch(previousStitch)) - 1;
+			firstRow = (model.pattern.height - model.getRowNumberOfStitch(model.stitch)) - 1;
 		} else {
-			firstRow = model.getRowNumberOfStitch(model.stitch);
-			lastRow = model.getRowNumberOfStitch(previousStitch);
+			lastRow = (model.pattern.height - model.getRowNumberOfStitch(model.stitch)) - 1;
+			firstRow = (model.pattern.height - model.getRowNumberOfStitch(previousStitch)) - 1;
 		}
-
-		console.log('firstRow', firstRow);
-		console.log('lastRow + 1', lastRow + 1);
-		console.log('this.patternRows.slice(firstRow, lastRow + 1)', this.patternRows.slice(firstRow, lastRow + 1));
 
 		this._drawRows(firstRow, currentCtx, colours, this.patternRows.slice(firstRow, lastRow + 1));
 	}
@@ -126,26 +124,14 @@ export default class PatternDisplay {
 
 			row.forEach((_, rowStitchI) => {
 
-				console.log('rowI', rowI);
-				console.log('rowStitchI', rowStitchI);
-
 				const thisStitchDone = model.isStitchDoneYet(rowI, rowStitchI);
 				const margin = thisStitchDone ? 0 : 1;
-
-
-				//console.log('rowI', rowI);
-				//console.log('rowStitchI', rowStitchI);
-				//console.log('patternRows[rowI][rowStitchI]', patternRows[rowI][rowStitchI]);
 
 				const stitchValue = patternRows[theseRowsI][rowStitchI];
 				const left = rowStitchI * this.stitchWidth + margin;
 				const top = rowI * this.stitchHeight + margin;
 				const width = this.stitchWidth - (margin * 2);
 				const height = this.stitchHeight - (margin * 2);
-
-
-				// TODO BRB thisStitchDone is always 0 for some reason????
-				//console.log('thisStitchDone', thisStitchDone);
 
 				context.fillStyle = colours[thisStitchDone ? 'done' : 'notDone'][stitchValue ? 'a' : 'b'];
 				context.fillRect(left, top, width, height);
