@@ -48,5 +48,21 @@ describe('getPatternDrawState', function () {
 		]);
 	});
 
+	it('When the current stitch is before the previous stitch, it should still work', function () {
+		expect(getPatternDrawState(patternRows, 2, 5)).to.deep.equal([
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[null, null, null, 'w', 'w', 'w', null, null, null]
+		]);
+	});
+
 
 });

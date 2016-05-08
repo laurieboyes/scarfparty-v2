@@ -35,12 +35,12 @@ export default function (patternRowsTl, currentStitchBr, previousStitchBrt) {
 			const rowDrawing = [];
 			drawStateRowsTl.push(rowDrawing);
 
-			if(rowI >= startRowNumber && rowI <= endRowNumber) {
+			if (rowI >= startRowNumber && rowI <= endRowNumber) {
 				row.forEach((rowStitch, rowStitchI) => {
 					const thisRowStitchFromTopLeft = (rowI * row.length) + rowStitchI;
 					const donePrefix = currentStitchTl <= thisRowStitchFromTopLeft ? 'd' : '';
 
-					if((currentStitchTl % row.length) <= rowStitchI) {
+					if ((currentStitchTl % row.length) <= rowStitchI) {
 						if (rowStitch) {
 							rowDrawing.push(donePrefix + 'b');
 						} else {
@@ -54,6 +54,33 @@ export default function (patternRowsTl, currentStitchBr, previousStitchBrt) {
 			}
 		});
 
+	} else {
+		const startRowNumber = Math.floor(previousStitchTl / patternRowsTl[0].length);
+		const endRowNumber = Math.floor(currentStitchTl / patternRowsTl[0].length);
+
+		patternRowsTl.forEach((row, rowI) => {
+			const rowDrawing = [];
+			drawStateRowsTl.push(rowDrawing);
+
+			if (rowI >= startRowNumber && rowI <= endRowNumber) {
+				row.forEach((rowStitch, rowStitchI) => {
+					const thisRowStitchFromTopLeft = (rowI * row.length) + rowStitchI;
+					const donePrefix = currentStitchTl <= thisRowStitchFromTopLeft ? 'd' : '';
+
+					if (((previousStitchTl % row.length) - 1) <= rowStitchI && (currentStitchTl % row.length) > rowStitchI) {
+
+						if (rowStitch) {
+							rowDrawing.push(donePrefix + 'b');
+						} else {
+							rowDrawing.push(donePrefix + 'w');
+						}
+					} else {
+						rowDrawing.push(null);
+					}
+
+				})
+			}
+		});
 	}
 
 	return drawStateRowsTl;
