@@ -64,5 +64,12 @@ describe('getPatternDrawState', function () {
 		]);
 	});
 
+	it('When the current stitch and the previous stitch are equal, don\'t draw anything', function () {
+		expect(getPatternDrawState(patternRows, 2, 2)).to.deep.equal([]);
+	});
+
+	// todo
+	//  wrong side colours reversed
+	//  affecting multiple rows
 
 });
