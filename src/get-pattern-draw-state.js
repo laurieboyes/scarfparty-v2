@@ -1,38 +1,60 @@
 import isStitchRightSide from './util/is-stitch-right-side';
 
-export default function(patternRowsFromTopLeft, currentStitchFromBottomRight, previousStitch) {
+// Br = from bottom right
+// Tl = from top left
 
-	const totalStitches = patternRowsFromTopLeft.length * patternRowsFromTopLeft[0].length;
-	const currentStitchFromTopLeft = (totalStitches - currentStitchFromBottomRight) - 1;
+export default function (patternRowsTl, currentStitchBr, previousStitchBrt) {
 
-	const rows = [];
+	const totalStitches = patternRowsTl.length * patternRowsTl[0].length;
+	const currentStitchTl = (totalStitches - currentStitchBr) - 1;
+	const previousStitchTl = (totalStitches - previousStitchBrt);
 
-	let startStitch;
-	let endStitch;
+	const drawStateRowsTl = [];
 
+	if (previousStitchBrt === undefined) {
 
-	if(previousStitch === undefined) {
-		startStitch = (patternRowsFromTopLeft.length * patternRowsFromTopLeft[0].length) - 1;
-		endStitch = 0;
-
-		patternRowsFromTopLeft.forEach((row, rowI) => {
+		patternRowsTl.forEach((row, rowI) => {
 			const rowDrawing = [];
-			rows.push(rowDrawing);
+			drawStateRowsTl.push(rowDrawing);
 			row.forEach((rowStitch, rowStitchI) => {
 				const thisRowStitchFromTopLeft = (rowI * row.length) + rowStitchI;
-				const donePrefix = currentStitchFromTopLeft <= thisRowStitchFromTopLeft ? 'd' : '';
-				if(rowStitch) {
+				const donePrefix = currentStitchTl <= thisRowStitchFromTopLeft ? 'd' : '';
+				if (rowStitch) {
 					rowDrawing.push(donePrefix + 'b');
 				} else {
 					rowDrawing.push(donePrefix + 'w');
 				}
 			})
 		});
+	} else if (previousStitchBrt < currentStitchBr) {
+
+		const startRowNumber = Math.floor(currentStitchTl / patternRowsTl[0].length);
+		const endRowNumber = Math.floor(previousStitchTl / patternRowsTl[0].length);
+
+		patternRowsTl.forEach((row, rowI) => {
+			const rowDrawing = [];
+			drawStateRowsTl.push(rowDrawing);
+
+			if(rowI >= startRowNumber && rowI <= endRowNumber) {
+				row.forEach((rowStitch, rowStitchI) => {
+					const thisRowStitchFromTopLeft = (rowI * row.length) + rowStitchI;
+					const donePrefix = currentStitchTl <= thisRowStitchFromTopLeft ? 'd' : '';
+
+					if((currentStitchTl % row.length) <= rowStitchI) {
+						if (rowStitch) {
+							rowDrawing.push(donePrefix + 'b');
+						} else {
+							rowDrawing.push(donePrefix + 'w');
+						}
+					} else {
+						rowDrawing.push(null);
+					}
+
+				})
+			}
+		});
+
 	}
 
-	return {
-		startStitch,
-		endStitch,
-		rows
-	};
+	return drawStateRowsTl;
 }
