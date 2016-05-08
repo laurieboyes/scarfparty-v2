@@ -1,8 +1,8 @@
 import p from 'pubsub';
 import Pattern from './pattern'
 import PatternDisplay from './pattern-display'
-import deepCopyObject from './util/deepCopyObject';
-import tweakColourLuminance from './util/tweakColourLuminance';
+import deepCopyObject from './util/deep-copy-object';
+import tweakColourLuminance from './util/tweak-colour-luminance';
 
 const model = {
 	stitch: 0,
