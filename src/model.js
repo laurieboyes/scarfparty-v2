@@ -3,6 +3,7 @@ import Pattern from './pattern'
 import PatternDisplay from './pattern-display'
 import deepCopyObject from './util/deep-copy-object';
 import tweakColourLuminance from './util/tweak-colour-luminance';
+import isStitchRightSide from './util/is-stitch-right-side';
 
 const model = {
 	stitch: 0,
@@ -37,7 +38,7 @@ function getRowNumberOfStitch(stitch) {
 }
 
 function isRightSide() {
-	return Math.floor(model.stitch / model.pattern.width) % 2 === 0;
+	return isStitchRightSide(model.stitch, model.pattern.width);
 }
 
 function isStitchDoneYet(rowIndexFromTop, rowStitch) {
