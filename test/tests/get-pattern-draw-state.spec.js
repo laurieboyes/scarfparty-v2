@@ -16,7 +16,7 @@ describe('getPatternDrawState', function () {
 		[0, 0, 0, 0, 0, 0, 0, 0, 0]
 	];
 
-	it('When only the start stitch is given, the whole thing should be redrawn', function () {
+	it('should redraw the whole thing when only the start stitch is given', function () {
 		expect(getPatternDrawState(patternRows, 5)).to.deep.equal([
 			['w', 'b', 'w', 'w', 'w', 'w', 'w', 'w', 'w'],
 			['w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w'],
@@ -32,7 +32,7 @@ describe('getPatternDrawState', function () {
 		]);
 	});
 
-	it('When the start stitch and previous stitch are given, just the affected stitches should be redrawn', function () {
+	it('should just draw the affected stitches when the start stitch and previous stitch are given', function () {
 		expect(getPatternDrawState(patternRows, 5, 0)).to.deep.equal([
 			[],
 			[],
@@ -48,7 +48,7 @@ describe('getPatternDrawState', function () {
 		]);
 	});
 
-	it('if there are unaffected rows later in the row, they shouldn\'t be present in the drawState', function () {
+	it('should not put changes in the drawstate for unaffected rows after some other changes', function () {
 		expect(getPatternDrawState(patternRows, 5, 2)).to.deep.equal([
 			[],
 			[],
@@ -64,7 +64,7 @@ describe('getPatternDrawState', function () {
 		]);
 	});
 
-	it('When the current stitch is before the previous stitch, it should still work', function () {
+	it('should still work when the current stitch is before the previous stitch', function () {
 		expect(getPatternDrawState(patternRows, 2, 5)).to.deep.equal([
 			[],
 			[],
@@ -80,11 +80,11 @@ describe('getPatternDrawState', function () {
 		]);
 	});
 
-	it('When the current stitch and the previous stitch are equal, don\'t draw anything', function () {
+	it('should not draw anything when the current stitch and the previous stitch are equal', function () {
 		expect(getPatternDrawState(patternRows, 2, 2)).to.deep.equal([]);
 	});
 
-	it('When more than one row has changed, it should draw all of them', function () {
+	it('should draw all of them when more than one row has changed', function () {
 		expect(getPatternDrawState(patternRows, 23, 5)).to.deep.equal([
 			[],
 			[],
