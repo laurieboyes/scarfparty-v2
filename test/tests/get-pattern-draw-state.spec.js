@@ -100,7 +100,20 @@ describe('getPatternDrawState', function () {
 		]);
 	});
 
-	// todo
-	//  wrong side colours reversed
+	it('should reverse the colours when we\'re on a wrongside row', function () {
+		expect(getPatternDrawState(patternRows, 32, 5)).to.deep.equal([
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[null, null, null, 'dw', 'dw', 'dw', 'db', 'db', 'db'],
+			['db', 'db', 'db', 'db', 'dw', 'db', 'db', 'db', 'db'],
+			['db', 'db', 'db', 'db', 'db', 'db', 'db', 'db', 'db'],
+			['db', 'db', 'db']
+		]);
+	});
 
 });

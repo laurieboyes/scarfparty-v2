@@ -10,6 +10,8 @@ export default function (patternRowsTl, currentStitchBr, previousStitchBr) {
 	const currentStitchTl = (totalStitches - currentStitchBr) - 1;
 	const previousStitchTl = (totalStitches - previousStitchBr);
 
+	const onRightSide = isStitchRightSide(currentStitchBr, rowLength);
+
 	const drawStateRowsTl = [];
 
 	let startRowNumber;
@@ -59,9 +61,9 @@ export default function (patternRowsTl, currentStitchBr, previousStitchBr) {
 					// don't push anything
 				} else {
 					if (rowStitch) {
-						rowDrawing.push(donePrefix + 'b');
+						rowDrawing.push(donePrefix + (onRightSide ? 'b' : 'w'));
 					} else {
-						rowDrawing.push(donePrefix + 'w');
+						rowDrawing.push(donePrefix + (onRightSide ? 'w' : 'b'));
 					}
 				}
 			})
