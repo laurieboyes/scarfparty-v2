@@ -31,7 +31,7 @@ export default function (patternRowsTl, currentStitchBr, previousStitchBr) {
 		endRowNumber = Math.floor(previousStitchTl / rowLength);
 
 		startRowStitchNumber = currentStitchTl % rowLength;
-		endRowStitchNumber = (previousStitchTl - 1) % rowLength;
+		endRowStitchNumber = (previousStitchTl - 1) % rowLength - 1;
 
 	} else if (previousStitchBr > currentStitchBr) {
 		startRowNumber = Math.floor(previousStitchTl / rowLength);
@@ -53,16 +53,17 @@ export default function (patternRowsTl, currentStitchBr, previousStitchBr) {
 				const thisRowStitchFromTopLeft = (rowI * row.length) + rowStitchI;
 				const donePrefix = currentStitchTl <= thisRowStitchFromTopLeft ? 'd' : '';
 
-				if (startRowStitchNumber <= rowStitchI && endRowStitchNumber >= rowStitchI) {
+				if((rowI === startRowNumber) && (startRowStitchNumber > rowStitchI)) {
+					rowDrawing.push(null);
+				} else if((rowI === endRowNumber) && (endRowStitchNumber < rowStitchI)) {
+					// don't push anything
+				} else {
 					if (rowStitch) {
 						rowDrawing.push(donePrefix + 'b');
 					} else {
 						rowDrawing.push(donePrefix + 'w');
 					}
-				} else {
-					rowDrawing.push(null);
 				}
-
 			})
 		}
 	});
