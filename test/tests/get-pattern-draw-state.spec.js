@@ -30,6 +30,20 @@ describe('getPatternDrawState', function () {
 			['w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w'],
 			['w', 'w', 'w', 'dw', 'dw', 'dw', 'dw', 'dw', 'dw']
 		]);
+
+		expect(getPatternDrawState(patternRows, 5, null)).to.deep.equal([
+			['w', 'b', 'w', 'w', 'w', 'w', 'w', 'w', 'w'],
+			['w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w'],
+			['w', 'w', 'b', 'w', 'w', 'w', 'b', 'w', 'w'],
+			['w', 'b', 'b', 'b', 'w', 'b', 'b', 'b', 'w'],
+			['w', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'w'],
+			['w', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'w'],
+			['w', 'w', 'b', 'b', 'b', 'b', 'b', 'w', 'w'],
+			['w', 'w', 'w', 'b', 'b', 'b', 'w', 'w', 'w'],
+			['w', 'w', 'w', 'w', 'b', 'w', 'w', 'w', 'w'],
+			['w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w'],
+			['w', 'w', 'w', 'dw', 'dw', 'dw', 'dw', 'dw', 'dw']
+		]);
 	});
 
 	it('should just draw the affected stitches when the start stitch and previous stitch are given', function () {
@@ -65,7 +79,7 @@ describe('getPatternDrawState', function () {
 	});
 
 	it('should still work when the current stitch is before the previous stitch', function () {
-		expect(getPatternDrawState(patternRows, 2, 5)).to.deep.equal([
+		expect(getPatternDrawState(patternRows, 3, 5)).to.deep.equal([
 			[],
 			[],
 			[],
@@ -94,7 +108,7 @@ describe('getPatternDrawState', function () {
 			[],
 			[],
 			[],
-			[null, null, null, 'dw', 'db', 'dw', 'dw', 'dw', 'dw'],
+			[null, null, null, null, 'db', 'dw', 'dw', 'dw', 'dw'],
 			['dw', 'dw', 'dw', 'dw', 'dw', 'dw', 'dw', 'dw', 'dw'],
 			['dw', 'dw', 'dw']
 		]);
@@ -109,10 +123,26 @@ describe('getPatternDrawState', function () {
 			[],
 			[],
 			[],
-			[null, null, null, 'dw', 'dw', 'dw', 'db', 'db', 'db'],
+			[null, null, null, null, 'dw', 'dw', 'db', 'db', 'db'],
 			['db', 'db', 'db', 'db', 'dw', 'db', 'db', 'db', 'db'],
 			['db', 'db', 'db', 'db', 'db', 'db', 'db', 'db', 'db'],
 			['db', 'db', 'db']
+		]);
+	});
+
+	it.only('should deal with it when we go back to stitch 0', function () {
+		expect(getPatternDrawState(patternRows, 0, 5)).to.deep.equal([
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[null, null, null, null, 'w', 'w', 'w', 'w', 'w']
 		]);
 	});
 

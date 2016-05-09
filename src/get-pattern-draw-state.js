@@ -19,7 +19,7 @@ export default function (patternRowsTl, currentStitchBr, previousStitchBr) {
 	let startRowStitchNumber;
 	let endRowStitchNumber;
 
-	if (previousStitchBr === undefined) {
+	if (typeof previousStitchBr !== 'number') {
 
 		startRowNumber = 0;
 		endRowNumber = patternRowsTl.length - 1;
@@ -33,7 +33,7 @@ export default function (patternRowsTl, currentStitchBr, previousStitchBr) {
 		endRowNumber = Math.floor(previousStitchTl / rowLength);
 
 		startRowStitchNumber = currentStitchTl % rowLength;
-		endRowStitchNumber = (previousStitchTl - 1) % rowLength - 1;
+		endRowStitchNumber = (previousStitchTl - 1) % rowLength;
 
 	} else if (previousStitchBr > currentStitchBr) {
 		startRowNumber = Math.floor(previousStitchTl / rowLength);
@@ -55,11 +55,23 @@ export default function (patternRowsTl, currentStitchBr, previousStitchBr) {
 				const thisRowStitchFromTopLeft = (rowI * row.length) + rowStitchI;
 				const donePrefix = currentStitchTl <= thisRowStitchFromTopLeft ? 'd' : '';
 
-				if((rowI === startRowNumber) && (startRowStitchNumber > rowStitchI)) {
+				if((rowI === startRowNumber)) {
+					console.log('startRowStitchNumber', startRowStitchNumber);
+					console.log('rowStitchI', rowStitchI);
+				}
+				if((rowI === endRowNumber)) {
+					console.log('endRowStitchNumber', endRowStitchNumber);
+					console.log('rowStitchI', rowStitchI);
+				}
+
+				if((rowI === startRowNumber) && (startRowStitchNumber >= rowStitchI)) {
 					rowDrawing.push(null);
+					console.log('null');
 				} else if((rowI === endRowNumber) && (endRowStitchNumber < rowStitchI)) {
 					// don't push anything
+					console.log('nothing');
 				} else {
+					console.log('a colour thing');
 					if (rowStitch) {
 						rowDrawing.push(donePrefix + (onRightSide ? 'b' : 'w'));
 					} else {
