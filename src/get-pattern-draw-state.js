@@ -19,7 +19,7 @@ export default function (patternRowsTl, currentStitchBr, previousStitchBr) {
 	let startRowStitchNumber;
 	let endRowStitchNumber;
 
-	if (previousStitchBr === undefined) {
+	if (typeof previousStitchBr !== 'number') {
 
 		startRowNumber = 0;
 		endRowNumber = patternRowsTl.length - 1;
@@ -32,15 +32,15 @@ export default function (patternRowsTl, currentStitchBr, previousStitchBr) {
 		startRowNumber = Math.floor(currentStitchTl / rowLength);
 		endRowNumber = Math.floor(previousStitchTl / rowLength);
 
-		startRowStitchNumber = currentStitchTl % rowLength;
-		endRowStitchNumber = (previousStitchTl - 1) % rowLength - 1;
+		startRowStitchNumber = (currentStitchTl % rowLength) + 1;
+		endRowStitchNumber = (previousStitchTl - 1) % rowLength;
 
 	} else if (previousStitchBr > currentStitchBr) {
 		startRowNumber = Math.floor(previousStitchTl / rowLength);
 		endRowNumber = Math.floor(currentStitchTl / rowLength);
 
-		startRowStitchNumber = (previousStitchTl % rowLength) - 1;
-		endRowStitchNumber = (currentStitchTl -1) % rowLength;
+		startRowStitchNumber = previousStitchTl % rowLength;
+		endRowStitchNumber = currentStitchTl % rowLength;
 
 	} else { // previousStitchBr === currentStitchBr
 		return [];
@@ -53,7 +53,7 @@ export default function (patternRowsTl, currentStitchBr, previousStitchBr) {
 		if (rowI >= startRowNumber && rowI <= endRowNumber) {
 			row.forEach((rowStitch, rowStitchI) => {
 				const thisRowStitchFromTopLeft = (rowI * row.length) + rowStitchI;
-				const donePrefix = currentStitchTl <= thisRowStitchFromTopLeft ? 'd' : '';
+				const donePrefix = currentStitchTl < thisRowStitchFromTopLeft ? 'd' : '';
 
 				if((rowI === startRowNumber) && (startRowStitchNumber > rowStitchI)) {
 					rowDrawing.push(null);

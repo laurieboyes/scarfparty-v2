@@ -28,7 +28,23 @@ describe('getPatternDrawState', function () {
 			['w', 'w', 'w', 'b', 'b', 'b', 'w', 'w', 'w'],
 			['w', 'w', 'w', 'w', 'b', 'w', 'w', 'w', 'w'],
 			['w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w'],
-			['w', 'w', 'w', 'dw', 'dw', 'dw', 'dw', 'dw', 'dw']
+			['w', 'w', 'w', 'w', 'dw', 'dw', 'dw', 'dw', 'dw']
+		]);
+	});
+
+	it('should draw the whole emtpy state whena  start stitch of 0 and no previous stitch is given', function () {
+		expect(getPatternDrawState(patternRows, 0)).to.deep.equal([
+			['w', 'b', 'w', 'w', 'w', 'w', 'w', 'w', 'w'],
+			['w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w'],
+			['w', 'w', 'b', 'w', 'w', 'w', 'b', 'w', 'w'],
+			['w', 'b', 'b', 'b', 'w', 'b', 'b', 'b', 'w'],
+			['w', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'w'],
+			['w', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'w'],
+			['w', 'w', 'b', 'b', 'b', 'b', 'b', 'w', 'w'],
+			['w', 'w', 'w', 'b', 'b', 'b', 'w', 'w', 'w'],
+			['w', 'w', 'w', 'w', 'b', 'w', 'w', 'w', 'w'],
+			['w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w'],
+			['w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w']
 		]);
 	});
 
@@ -44,7 +60,7 @@ describe('getPatternDrawState', function () {
 			[],
 			[],
 			[],
-			[null, null, null, 'dw', 'dw', 'dw', 'dw', 'dw', 'dw']
+			[null, null, null, null, 'dw', 'dw', 'dw', 'dw', 'dw']
 		]);
 	});
 
@@ -60,12 +76,12 @@ describe('getPatternDrawState', function () {
 			[],
 			[],
 			[],
-			[null, null, null, 'dw', 'dw', 'dw']
+			[null, null, null, null, 'dw', 'dw', 'dw']
 		]);
 	});
 
 	it('should still work when the current stitch is before the previous stitch', function () {
-		expect(getPatternDrawState(patternRows, 2, 5)).to.deep.equal([
+		expect(getPatternDrawState(patternRows, 3, 5)).to.deep.equal([
 			[],
 			[],
 			[],
@@ -76,7 +92,7 @@ describe('getPatternDrawState', function () {
 			[],
 			[],
 			[],
-			[null, null, null, 'w', 'w', 'w']
+			[null, null, null, null, 'w', 'w']
 		]);
 	});
 
@@ -94,9 +110,9 @@ describe('getPatternDrawState', function () {
 			[],
 			[],
 			[],
-			[null, null, null, 'dw', 'db', 'dw', 'dw', 'dw', 'dw'],
+			[null, null, null, null, 'db', 'dw', 'dw', 'dw', 'dw'],
 			['dw', 'dw', 'dw', 'dw', 'dw', 'dw', 'dw', 'dw', 'dw'],
-			['dw', 'dw', 'dw']
+			['dw', 'dw', 'dw', 'dw']
 		]);
 	});
 
@@ -109,10 +125,26 @@ describe('getPatternDrawState', function () {
 			[],
 			[],
 			[],
-			[null, null, null, 'dw', 'dw', 'dw', 'db', 'db', 'db'],
+			[null, null, null, null, 'dw', 'dw', 'db', 'db', 'db'],
 			['db', 'db', 'db', 'db', 'dw', 'db', 'db', 'db', 'db'],
 			['db', 'db', 'db', 'db', 'db', 'db', 'db', 'db', 'db'],
-			['db', 'db', 'db']
+			['db', 'db', 'db', 'db']
+		]);
+	});
+
+	it('should deal with it when we go back to stitch 0', function () {
+		expect(getPatternDrawState(patternRows, 0, 5)).to.deep.equal([
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[null, null, null, null, 'w', 'w', 'w', 'w', 'w']
 		]);
 	});
 

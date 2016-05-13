@@ -7,7 +7,7 @@ import isStitchRightSide from './util/is-stitch-right-side';
 
 const model = {
 	stitch: 0,
-	increment: 6,
+	increment: 3,
 	pattern: null,
 	patternDisplay: null,
 	colours: null,
@@ -105,7 +105,6 @@ p.subscribe('/save-settings', settingsModel => {
 	};
 
 	p.publish('/stitch', model.stitch);
-	model.patternDisplay.draw(true);
 
 	localStorage.patternUrl = settingsModel.patternImg.src;
 	localStorage.colours = JSON.stringify(settingsModel.colours);
