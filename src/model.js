@@ -1,12 +1,13 @@
 import p from 'pubsub';
 import Pattern from './pattern'
 import PatternDisplay from './pattern-display'
-import deepCopyObject from './util/deepCopyObject';
-import tweakColourLuminance from './util/tweakColourLuminance';
+import deepCopyObject from './util/deep-copy-object';
+import tweakColourLuminance from './util/tweak-colour-luminance';
+import isStitchRightSide from './util/is-stitch-right-side';
 
 const model = {
 	stitch: 0,
-	increment: 6,
+	increment: 3,
 	pattern: null,
 	patternDisplay: null,
 	colours: null,
@@ -14,8 +15,10 @@ const model = {
 	getTotalStitches,
 	getRowsDone,
 	getRowStitchesDone,
+	getRowNumberOfStitch,
 	isRightSide,
-	isStitchDoneYet
+	isStitchDoneYet,
+	getColoursReversed
 };
 
 function getTotalStitches() {
@@ -23,15 +26,19 @@ function getTotalStitches() {
 }
 
 function getRowsDone() {
-	return Math.floor(model.stitch / model.pattern.width);
+	return model.getRowNumberOfStitch(model.stitch);
 }
 
 function getRowStitchesDone () {
 	return model.stitch % model.pattern.width;
 }
 
+function getRowNumberOfStitch(stitch) {
+	return Math.floor(stitch / model.pattern.width);
+}
+
 function isRightSide() {
-	return Math.floor(model.stitch / model.pattern.width) % 2 === 0;
+	return isStitchRightSide(model.stitch, model.pattern.width);
 }
 
 function isStitchDoneYet(rowIndexFromTop, rowStitch) {
@@ -45,6 +52,19 @@ function isStitchDoneYet(rowIndexFromTop, rowStitch) {
 	const remainingStitches = totalStitches - model.stitch;
 
 	return thisStitch >= remainingStitches;
+}
+
+function getColoursReversed() {
+	return {
+		done: {
+			a: model.colours.done.b,
+			b: model.colours.done.a
+		},
+		notDone: {
+			a: model.colours.notDone.b,
+			b: model.colours.notDone.a
+		}
+	}
 }
 
 

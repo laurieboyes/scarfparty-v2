@@ -33,6 +33,10 @@ function getPixelsOnOff(imageData) {
         .map(pixel => pixel > 127 ? 0 : 1);
 }
 
+/**
+ * @param img
+ * @returns {Array} pattern rows, ordered from top of image to bottom
+ */
 function getRows(img) {
 
 	const rows = [];

@@ -1,12 +1,14 @@
 import p from 'pubsub'
 import model from './model.js'
+import isStitchRightSide from './util/is-stitch-right-side';
+import getPatternDrawState from './get-pattern-draw-state';
+import drawStateOnCanvas from './draw-state-on-canvas.js';
 
 export default class PatternDisplay {
 	constructor (pattern) {
 
 		this.pattern = pattern;
 		this.patternRows = pattern.rows;
-		this.patternRowsReversed = pattern.rows.map(row => row.slice().reverse());
 
 		this.containerEl = document.querySelector('.js-pattern-container');
 		this.canvasWidth = this.containerEl.offsetWidth;
@@ -15,19 +17,49 @@ export default class PatternDisplay {
 		this.stitchWidth = this.canvasWidth / pattern.width;
 		this.stitchHeight = this.canvasHeight / pattern.height;
 
-		const canvasEl = this.containerEl.querySelector('canvas');
-		canvasEl.width = this.canvasWidth;
-		canvasEl.height = this.canvasHeight;
+		this.canvasEl = document.querySelector('.js-pattern');
+		this.canvasEl.width = this.canvasWidth;
+		this.canvasEl.height = this.canvasHeight;
 
-		this.ctx = canvasEl.getContext("2d");
+		this.canvasReversedEl = document.querySelector('.js-pattern-reversed');
+		this.canvasReversedEl.width = this.canvasWidth;
+		this.canvasReversedEl.height = this.canvasHeight;
+
+		this.ctx = this.canvasEl.getContext("2d");
+		this.ctxReversed = this.canvasReversedEl.getContext("2d");
+
+		this.previousStitches = {
+			rs: null,
+			ws: null
+		};
 
 		// event handling
 
 		this.subscriptions = [];
 
-		const stitchHandler = () => {
-			this.draw();
-			this.scrollToRow(model.getRowsDone())
+		const stitchHandler = newStitch => {
+
+			let thisSideCtx;
+			let sideKey;
+
+			if(isStitchRightSide(newStitch, this.pattern.width)) {
+				this.canvasEl.classList.add('is-showing');
+				this.canvasReversedEl.classList.remove('is-showing');
+				thisSideCtx = this.ctx;
+				sideKey = 'rs'
+			} else {
+				this.canvasEl.classList.remove('is-showing');
+				this.canvasReversedEl.classList.add('is-showing');
+				thisSideCtx = this.ctxReversed;
+				sideKey = 'ws'
+			}
+
+			const drawingState = getPatternDrawState(this.patternRows, newStitch, this.previousStitches[sideKey]);
+
+			drawStateOnCanvas(thisSideCtx, drawingState, this.stitchHeight, this.stitchWidth, model.colours);
+
+			this.previousStitches[sideKey] = newStitch;
+			this.scrollToRow(model.getRowNumberOfStitch(newStitch));
 		};
 		p.subscribe('/stitch', stitchHandler);
 
@@ -40,35 +72,12 @@ export default class PatternDisplay {
 	 */
 	scrollToRow (row) {
 
-		const scrollTopAtBottom = this.canvasHeight -  this.containerEl.offsetHeight;
+		const scrollTopAtBottom = this.canvasHeight - this.containerEl.offsetHeight;
 		const offsetForCurrentRow = (row * this.stitchHeight);
 		const rowsDisplayed = this.containerEl.offsetHeight / this.stitchHeight;
 		const offsetForShowingPrevious = (rowsDisplayed / 3) * this.stitchHeight;
 
 		this.containerEl.scrollTop = scrollTopAtBottom - (offsetForCurrentRow - offsetForShowingPrevious);
-	}
-
-	draw () {
-
-		this.ctx.fillStyle = "white";
-		this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
-
-		this.patternRows.forEach((row, rowI) => {
-			row.forEach((_, rowStitchI) => {
-
-				const thisStitchDone = model.isStitchDoneYet(rowI, rowStitchI);
-				const margin = thisStitchDone ? 0 : 1;
-				const stitch = model.isRightSide() ? this.patternRows[rowI][rowStitchI] : this.patternRowsReversed[rowI][rowStitchI];
-				const left = rowStitchI * this.stitchWidth + margin;
-				const top = rowI * this.stitchHeight + margin;
-				const width = this.stitchWidth - (margin * 2);
-				const height = this.stitchHeight - (margin * 2);
-
-				// mad logic here
-				this.ctx.fillStyle = model.colours[thisStitchDone ? 'done' : 'notDone'][!!stitch !== model.isRightSide() ? 'a' : 'b'];
-				this.ctx.fillRect(left, top, width, height);
-			})
-		});
 	}
 
 	tearDown () {
