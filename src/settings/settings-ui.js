@@ -29,6 +29,7 @@ export default function init() {
 	saveAndCloseEl.addEventListener('click', () => {
 		p.publish('/save-settings', settingsModel);
 		settingsEl.classList.remove('is-open');
+		closeEl.style.display = 'inline';
 	});
 
 	patternUrlEl.addEventListener('input', () => {
@@ -70,5 +71,9 @@ export default function init() {
 		if(colourBInputEl !== document.activeElement) {
 			colourBInputEl.value = newColour;
 		}
+	});
+
+	p.subscribe('/settings/ui/disable-close-without-saving', () => {
+		closeEl.style.display = 'none';
 	});
 }

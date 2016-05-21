@@ -37,6 +37,8 @@ p.subscribe('/settings/useDefaults', () => {
 	p.publish('/settings/patternUrl', 'default-pattern.png');
 	p.publish('/settings/ui/colours/a', '#CECECE');
 	p.publish('/settings/ui/colours/b', '#B20000');
+
+	p.publish('/settings/ui/disable-close-without-saving');
 });
 
 export default settingsModel;
