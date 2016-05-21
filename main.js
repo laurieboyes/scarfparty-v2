@@ -49,6 +49,7 @@ ready(() => {
 				p.publish('/save-settings', settingsModel);
 			})
 	} else {
+		p.publish('/settings/useDefaults');
 		p.publish('/settings/open');
 	}
 
