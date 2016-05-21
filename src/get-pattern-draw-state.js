@@ -51,8 +51,11 @@ export default function (patternRowsTl, currentStitchBr, previousStitchBr) {
 		drawStateRowsTl.push(rowDrawing);
 
 		if (rowI >= startRowNumber && rowI <= endRowNumber) {
-			row.forEach((rowStitch, rowStitchI) => {
-				const thisRowStitchFromTopLeft = (rowI * row.length) + rowStitchI;
+
+			const possiblyFlippedRow = onRightSide ? row : row.slice().reverse();
+
+			possiblyFlippedRow.forEach((rowStitch, rowStitchI) => {
+				const thisRowStitchFromTopLeft = (rowI * possiblyFlippedRow.length) + rowStitchI;
 				const donePrefix = currentStitchTl < thisRowStitchFromTopLeft ? 'd' : '';
 
 				if((rowI === startRowNumber) && (startRowStitchNumber > rowStitchI)) {

@@ -149,6 +149,23 @@ describe('getPatternDrawState', function () {
 		]);
 	});
 
+	it('should reverse the pattern when we\'re on a wrongside row', function () {
+
+		expect(getPatternDrawState(patternRows, 99, 81)).to.deep.equal([
+			['db', 'db', 'db', 'db', 'db', 'db', 'db', 'dw', 'db'],
+			['db', 'db', 'db', 'db', 'db', 'db', 'db', 'db', 'db'],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[]
+		]);
+	});
+
 	it('should deal with it when we go back to stitch 0', function () {
 		expect(getPatternDrawState(patternRows, 0, 5)).to.deep.equal([
 			[],
