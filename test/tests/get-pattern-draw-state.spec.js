@@ -132,6 +132,23 @@ describe('getPatternDrawState', function () {
 		]);
 	});
 
+	it('shouldn\'t try to redraw the whole previous row when your previous stitch was the end of a row', function () {
+
+		expect(getPatternDrawState(patternRows, 75, 72)).to.deep.equal([
+			[],
+			[],
+			[null, null, null, null, null, null, 'db', 'dw', 'dw'],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[],
+			[]
+		]);
+	});
+
 	it('should deal with it when we go back to stitch 0', function () {
 		expect(getPatternDrawState(patternRows, 0, 5)).to.deep.equal([
 			[],

@@ -30,7 +30,7 @@ export default function (patternRowsTl, currentStitchBr, previousStitchBr) {
 	} else if (previousStitchBr < currentStitchBr) {
 
 		startRowNumber = Math.floor(currentStitchTl / rowLength);
-		endRowNumber = Math.floor(previousStitchTl / rowLength);
+		endRowNumber = Math.floor((previousStitchTl - 1) / rowLength);
 
 		startRowStitchNumber = (currentStitchTl % rowLength) + 1;
 		endRowStitchNumber = (previousStitchTl - 1) % rowLength;
