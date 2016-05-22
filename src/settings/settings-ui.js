@@ -15,6 +15,7 @@ export default function init() {
 	const colourASwatchEl = document.querySelector('.js-colour-a-swatch');
 	const colourBInputEl = document.querySelector('.js-colour-b-input');
 	const colourBSwatchEl = document.querySelector('.js-colour-b-swatch');
+	const incrementEl = document.querySelector('.js-increment');
 
 	// control event listeners
 
@@ -41,6 +42,12 @@ export default function init() {
 
 	colourBInputEl.addEventListener('input', () => {
 		p.publish('/settings/ui/colours/b', colourBInputEl.value);
+	});
+
+	incrementEl.addEventListener('input', () => {
+		if(!isNaN(+incrementEl.value) && +incrementEl.value > 0) {
+			p.publish('/settings/ui/increment', +incrementEl.value);
+		}
 	});
 
 
@@ -72,4 +79,9 @@ export default function init() {
 		}
 	});
 
+	p.subscribe('/settings/ui/increment', newInc => {
+		if(incrementEl !== document.activeElement) {
+			incrementEl.value = newInc;
+		}
+	});
 }

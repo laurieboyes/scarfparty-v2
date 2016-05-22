@@ -5,11 +5,12 @@ import p from 'pubsub'
 import ready from './src/util/ready'
 import loadImage from './src/util/loadImage'
 
-function setup (patternUrl, colours, stitch) {
+function setup (patternUrl, colours, increment, stitch) {
 
 	const settingsModel = {
 		patternImg: null,
-		colours: colours
+		colours: colours,
+		increment: increment
 	};
 
 	return loadImage(patternUrl)
@@ -44,12 +45,14 @@ ready(() => {
 
 	let patternUrl;
 	let colours;
+	let increment;
 	let stitch;
 	if (localStorage.getItem('patternUrl')) {
 
 		patternUrl = localStorage.getItem('patternUrl');
 		colours = JSON.parse(localStorage.getItem('colours'));
 		stitch = +localStorage.getItem('stitch');
+		increment = +localStorage.getItem('increment');
 
 	} else {
 
@@ -59,6 +62,7 @@ ready(() => {
 			b: '#B20000'
 		};
 		stitch = 0;
+		increment = 6;
 
 		p.publish('/settings/open');
 	}
@@ -66,6 +70,7 @@ ready(() => {
 	setup(
 		patternUrl,
 		colours,
+		increment,
 		stitch
 	).catch(console.err);
 

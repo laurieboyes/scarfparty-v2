@@ -82,7 +82,8 @@ p.subscribe('/settings/open', () => {
 	if(model.pattern) {
 		p.publish('/settings/updateFromModel', {
 			patternImg: model.pattern.img,
-			colours: deepCopyObject(model.colours.notDone)
+			colours: deepCopyObject(model.colours.notDone),
+			increment: model.increment
 		});
 	}
 });
@@ -104,10 +105,13 @@ p.subscribe('/save-settings', settingsModel => {
 		}
 	};
 
+	model.increment = settingsModel.increment;
+
 	p.publish('/stitch', model.stitch);
 
 	localStorage.patternUrl = settingsModel.patternImg.src;
 	localStorage.colours = JSON.stringify(settingsModel.colours);
+	localStorage.increment = settingsModel.increment;
 });
 
 export default model;
