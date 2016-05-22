@@ -5,6 +5,28 @@ import p from 'pubsub'
 import ready from './src/util/ready'
 import loadImage from './src/util/loadImage'
 
+function setup (patternUrl, colours, stitch) {
+
+	const settingsModel = {
+		patternImg: null,
+		colours: colours
+	};
+
+	return loadImage(patternUrl)
+		.then(img => {
+
+			document.querySelector('.js-pattern-container-loading-spinner').classList.remove('is-showing');
+			document.querySelector('.js-pattern').classList.add('is-showing');
+
+			settingsModel.patternImg = img;
+
+			model.stitch = stitch || 0;
+			p.publish('/save-settings', settingsModel);
+			p.publish('/settings/updateFromModel', settingsModel)
+		})
+
+}
+
 ready(() => {
 
 	initControls();
@@ -20,39 +42,32 @@ ready(() => {
 	patternContainerEl.style.height = `${screenHeight - (controlsHeight + marginCompensation)}px`;
 
 
-	if(localStorage.getItem('patternUrl')) {
+	let patternUrl;
+	let colours;
+	let stitch;
+	if (localStorage.getItem('patternUrl')) {
 
-		const settingsModel = {
-			patternImg: null,
-			colours: null
-		};
+		patternUrl = localStorage.getItem('patternUrl');
+		colours = JSON.parse(localStorage.getItem('colours'));
+		stitch = +localStorage.getItem('stitch');
 
-		const savedColours = localStorage.getItem('colours');
-		if(savedColours) {
-			settingsModel.colours = JSON.parse(savedColours);
-		} else {
-			settingsModel.colours = {
-				a: '#CECECE',
-				b: '#B20000'
-			}
-		}
-
-		loadImage(localStorage.getItem('patternUrl'))
-			.then(img => {
-
-				document.querySelector('.js-pattern-container-loading-spinner').classList.remove('is-showing');
-				document.querySelector('.js-pattern').classList.add('is-showing');
-
-				settingsModel.patternImg = img;
-
-				model.stitch =  +localStorage.getItem('stitch') || 0;
-				p.publish('/save-settings', settingsModel);
-			})
 	} else {
-		p.publish('/settings/useDefaults');
+
+		patternUrl = 'default-pattern.png';
+		colours = {
+			a: '#CECECE',
+			b: '#B20000'
+		};
+		stitch = 0;
+
 		p.publish('/settings/open');
 	}
 
+	setup(
+		patternUrl,
+		colours,
+		stitch
+	).catch(console.err);
 
 });
 
