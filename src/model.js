@@ -106,6 +106,7 @@ p.subscribe('/save-settings', settingsModel => {
 	};
 
 	model.increment = settingsModel.increment;
+	p.publish('/increment', model.increment);
 
 	p.publish('/stitch', model.stitch);
 
