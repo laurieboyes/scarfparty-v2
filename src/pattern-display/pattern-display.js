@@ -1,6 +1,6 @@
 import p from 'pubsub'
-import model from './model.js'
-import isStitchRightSide from './util/is-stitch-right-side';
+import model from './../model.js'
+import isStitchRightSide from './../util/is-stitch-right-side';
 import getPatternDrawState from './get-pattern-draw-state';
 import drawStateOnCanvas from './draw-state-on-canvas.js';
 

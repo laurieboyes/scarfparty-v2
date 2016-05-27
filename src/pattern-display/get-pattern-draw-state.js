@@ -1,4 +1,4 @@
-import isStitchRightSide from './util/is-stitch-right-side';
+import isStitchRightSide from './../util/is-stitch-right-side';
 
 // Br = from bottom right
 // Tl = from top left

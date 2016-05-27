@@ -1,6 +1,6 @@
 import p from 'pubsub';
 import Pattern from './pattern'
-import PatternDisplay from './pattern-display'
+import PatternDisplay from './pattern-display/pattern-display'
 import deepCopyObject from './util/deep-copy-object';
 import tweakColourLuminance from './util/tweak-colour-luminance';
 import isStitchRightSide from './util/is-stitch-right-side';

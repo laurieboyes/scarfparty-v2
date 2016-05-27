@@ -1,4 +1,4 @@
-import getPatternDrawState from '../../src/get-pattern-draw-state.js'
+import getPatternDrawState from '../../src/pattern-display/get-pattern-draw-state.js'
 
 describe('getPatternDrawState', function () {
 
