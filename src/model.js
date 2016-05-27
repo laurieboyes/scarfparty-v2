@@ -4,12 +4,14 @@ import PatternDisplay from './pattern-display/pattern-display'
 import deepCopyObject from './util/deep-copy-object';
 import tweakColourLuminance from './util/tweak-colour-luminance';
 import isStitchRightSide from './util/is-stitch-right-side';
+import StitchMarkers from './pattern-display/stitch-markers'
 
 const model = {
 	stitch: 0,
 	increment: 3,
 	pattern: null,
 	patternDisplay: null,
+	stitchMarkers: null,
 	colours: null,
 
 	getTotalStitches,
@@ -96,6 +98,8 @@ p.subscribe('/save-settings', settingsModel => {
 		model.patternDisplay.tearDown();
 	}
 	model.patternDisplay = new PatternDisplay(model.pattern);
+
+	model.stitchMarkers = new StitchMarkers(model.pattern.height, model.pattern.width);
 
 	model.colours = {
 		notDone: deepCopyObject(settingsModel.colours),
