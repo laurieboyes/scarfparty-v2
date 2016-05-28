@@ -24,8 +24,8 @@ export default class StitchMarkers {
 		this.subscriptions = [];
 
 		let currentlyShowingRightSide = null;
-		const stitchHandler = () => {
 
+		const flipCanvasIfWrongSide = () => {
 			if(currentlyShowingRightSide !== model.isRightSide()) {
 				currentlyShowingRightSide = model.isRightSide();
 				if(model.isRightSide()) {
@@ -34,20 +34,22 @@ export default class StitchMarkers {
 					this.canvasEl.style.transform = 'scaleX(-1)'
 				}
 			}
-
-			this.draw();
-
 		};
-		p.subscribe('/stitch', stitchHandler);
 
-		this.subscriptions.push(stitchHandler);
+		const redrawStitchMarkers = stitchMarkers => this.draw(stitchMarkers);
+
+		p.subscribe('/stitch', flipCanvasIfWrongSide);
+		p.subscribe('/stitchMarkers', redrawStitchMarkers);
+
+		this.subscriptions.push(flipCanvasIfWrongSide);
+		this.subscriptions.push(redrawStitchMarkers);
 	}
 
-	draw() {
+	draw(stitchMarkers) {
 
-		const stitchMarkersBr = [25,50,75,100,125];
+		this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
 
-		stitchMarkersBr.forEach(stitchMarker => {
+		stitchMarkers.forEach(stitchMarker => {
 			this.ctx.fillStyle = 'red';
 			const markerX = (this.canvasWidth - (stitchMarker * this.stitchWidth)) - 0.5;
 			this.ctx.fillRect(markerX, 0, 1, this.canvasHeight);

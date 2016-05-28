@@ -114,6 +114,7 @@ p.subscribe('/save-settings', settingsModel => {
 	p.publish('/increment', model.increment);
 
 	model.stitchMarkers = settingsModel.stitchMarkers;
+	p.publish('/stitchMarkers', model.stitchMarkers);
 
 	p.publish('/stitch', model.stitch);
 
