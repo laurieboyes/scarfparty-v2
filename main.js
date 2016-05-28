@@ -3,14 +3,15 @@ import initSettingsUi from './src/settings/settings-ui'
 import model from './src/model'
 import p from 'pubsub'
 import ready from './src/util/ready'
-import loadImage from './src/util/loadImage'
+import loadImage from './src/util/load-image'
 
-function setup (patternUrl, colours, increment, stitch) {
+function setup (patternUrl, colours, increment, stitchMarkers, stitch) {
 
 	const settingsModel = {
 		patternImg: null,
 		colours: colours,
-		increment: increment
+		increment: increment,
+		stitchMarkers: stitchMarkers
 	};
 
 	return loadImage(patternUrl)
@@ -43,16 +44,23 @@ ready(() => {
 	patternContainerEl.style.height = `${screenHeight - (controlsHeight + marginCompensation)}px`;
 
 
+	const defaultColours = {
+		a: '#CECECE',
+		b: '#B20000'
+	};
+
 	let patternUrl;
 	let colours;
 	let increment;
+	let stitchMarkers;
 	let stitch;
 	if (localStorage.getItem('patternUrl')) {
 
 		patternUrl = localStorage.getItem('patternUrl');
-		colours = JSON.parse(localStorage.getItem('colours'));
-		stitch = +localStorage.getItem('stitch');
-		increment = +localStorage.getItem('increment');
+		colours = JSON.parse((localStorage.getItem('colours') || JSON.stringify(defaultColours)));
+		stitch = +(localStorage.getItem('stitch') || 0);
+		increment = +(localStorage.getItem('increment') || 6);
+		stitchMarkers = JSON.parse(localStorage.getItem('stitchMarkers') || '[]');
 
 	} else {
 
@@ -63,6 +71,7 @@ ready(() => {
 		};
 		stitch = 0;
 		increment = 6;
+		stitchMarkers = [];
 
 		p.publish('/settings/open');
 	}
@@ -71,6 +80,7 @@ ready(() => {
 		patternUrl,
 		colours,
 		increment,
+		stitchMarkers,
 		stitch
 	).catch(console.err);
 

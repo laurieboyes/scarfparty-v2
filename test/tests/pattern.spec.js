@@ -1,5 +1,5 @@
 import Pattern from '../../src/pattern.js'
-import loadImage from '../../src/util/loadImage'
+import loadImage from '../../src/util/load-image'
 
 function expectPatternToBeHeart (pattern) {
 	expect(pattern.width).to.equal(9);

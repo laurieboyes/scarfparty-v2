@@ -1,6 +1,6 @@
 import p from 'pubsub';
 import debounce from '../../node_modules/lodash/function/debounce';
-import loadImage from '../util/loadImage'
+import loadImage from '../util/load-image'
 
 let patternPreviewImageContainer;
 let patternPreviewError;

@@ -11,7 +11,7 @@ const model = {
 	increment: 3,
 	pattern: null,
 	patternDisplay: null,
-	stitchMarkers: null,
+	stitchMarkers: [],
 	colours: null,
 
 	getTotalStitches,
@@ -85,7 +85,8 @@ p.subscribe('/settings/open', () => {
 		p.publish('/settings/updateFromModel', {
 			patternImg: model.pattern.img,
 			colours: deepCopyObject(model.colours.notDone),
-			increment: model.increment
+			increment: model.increment,
+			stitchMarkers: model.stitchMarkers
 		});
 	}
 });
@@ -112,11 +113,14 @@ p.subscribe('/save-settings', settingsModel => {
 	model.increment = settingsModel.increment;
 	p.publish('/increment', model.increment);
 
+	model.stitchMarkers = settingsModel.stitchMarkers;
+
 	p.publish('/stitch', model.stitch);
 
 	localStorage.patternUrl = settingsModel.patternImg.src;
 	localStorage.colours = JSON.stringify(settingsModel.colours);
 	localStorage.increment = settingsModel.increment;
+	localStorage.stitchMarkers = JSON.stringify(settingsModel.stitchMarkers);
 });
 
 export default model;

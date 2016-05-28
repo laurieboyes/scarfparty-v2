@@ -28,8 +28,6 @@ export default class StitchMarkers {
 
 			if(currentlyShowingRightSide !== model.isRightSide()) {
 				currentlyShowingRightSide = model.isRightSide();
-				// flip the canvas
-				console.log('flip the canvas');
 				if(model.isRightSide()) {
 					this.canvasEl.style.transform = '';
 				} else {

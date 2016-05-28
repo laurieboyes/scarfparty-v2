@@ -1,6 +1,7 @@
 import p from 'pubsub';
 import settingsModel from './settings-model'
 import initPatternPreview from './pattern-preview'
+import parseStitchMarkers from '../util/parse-stitch-markers'
 
 export default function init() {
 
@@ -16,6 +17,7 @@ export default function init() {
 	const colourBInputEl = document.querySelector('.js-colour-b-input');
 	const colourBSwatchEl = document.querySelector('.js-colour-b-swatch');
 	const incrementEl = document.querySelector('.js-increment');
+	const stitchMarkersEl = document.querySelector('.js-stitch-markers-input');
 
 	// control event listeners
 
@@ -50,6 +52,11 @@ export default function init() {
 		}
 	});
 
+	stitchMarkersEl.addEventListener('input', () => {
+		const newStitchMarkers = parseStitchMarkers(stitchMarkersEl.value);
+		p.publish('/settings/ui/stitchMarkers', newStitchMarkers);
+	});
+
 
 	// other event handling
 
@@ -82,6 +89,14 @@ export default function init() {
 	p.subscribe('/settings/ui/increment', newInc => {
 		if(incrementEl !== document.activeElement) {
 			incrementEl.value = newInc;
+		}
+	});
+
+	p.subscribe('/settings/ui/stitchMarkers', newSm => {
+		if(stitchMarkersEl !== document.activeElement) {
+			stitchMarkersEl.value = newSm.reduce((str, thisSm, i) => {
+				return str + thisSm + (i + 1 !== newSm.length ? ',' : '')
+			}, '');
 		}
 	});
 }
