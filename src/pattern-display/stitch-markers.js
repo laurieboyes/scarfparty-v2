@@ -30,8 +30,12 @@ export default class StitchMarkers {
 				currentlyShowingRightSide = model.isRightSide();
 				if(model.isRightSide()) {
 					this.canvasEl.style.transform = '';
+					this.canvasEl.style.webkitTransform = '';
+					this.canvasEl.style.msTransform = '';
 				} else {
-					this.canvasEl.style.transform = 'scaleX(-1)'
+					this.canvasEl.style.transform = 'scaleX(-1)';
+					this.canvasEl.style.webkitTransform = 'scaleX(-1)';
+					this.canvasEl.style.msTransform = 'scaleX(-1)';
 				}
 			}
 		};
