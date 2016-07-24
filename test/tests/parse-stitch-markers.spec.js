@@ -1,6 +1,6 @@
 import parseStitchMarkers from '../../src/util/parse-stitch-markers.js';
 
-describe.only('parseStitchMarkers', function () {
+describe('parseStitchMarkers', function () {
 
 	it('should return an empty array given nothing', function () {
 		expect(parseStitchMarkers()).to.deep.equal([]);
