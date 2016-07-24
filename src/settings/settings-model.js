@@ -16,7 +16,7 @@ p.subscribe('/settings/patternImg', newImg => settingsModel.patternImg = newImg)
 
 function handleUiColourUpdate (aOrB, newColour) {
 	if(hexColourPattern.test(newColour)) {
-		if(!newColour.startsWith('#')) {
+		if(newColour.lastIndexOf('#', 0) !== 0) {
 			newColour = '#' + newColour;
 		}
 
